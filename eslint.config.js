@@ -42,7 +42,7 @@ export default [
       'no-multi-spaces': 'error',
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
       'object-curly-spacing': ['error', 'always'],
-      'padded-blocks': ['error', { blocks: 'never', classes: 'never', switches: 'never' }],
+      'padded-blocks': ['error', { blocks: 'never', classes: { allowSingleLine: true }, switches: 'never' }],
       'quote-props': ['error', 'as-needed'],
       'space-infix-ops': 'error',
       'spaced-comment': ['error', 'always', { exceptions: ['-'] }]

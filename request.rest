@@ -1,0 +1,19 @@
+
+
+POST http://localhost:5000/auth/singUp
+Content-Type: application/json
+
+{
+  "username": "Ayham2",
+  "password": "Pa$$w0rd"
+}
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "username": "Ayham3",
+  "password": "Pa$$w0rd"
+}
