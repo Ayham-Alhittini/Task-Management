@@ -1,19 +1,23 @@
+########################## Auth Request
 
-
+# Singup Request
 POST http://localhost:5000/auth/singUp
 Content-Type: application/json
 
 {
-  "username": "Ayham2",
+  "firstName": "Ayham",
+  "lastName": "Alhettini",
+  "email": "ayham.hittini268@gmail.com",
   "password": "Pa$$w0rd"
 }
 
 ###
 
+# Login Request
 POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "username": "Ayham3",
+  "email": "ayham.hittini268@gmail.com",
   "password": "Pa$$w0rd"
 }

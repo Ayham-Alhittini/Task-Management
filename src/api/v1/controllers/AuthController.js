@@ -5,22 +5,17 @@ import authService from '../services/AuthService.js';
 class AuthController {
 
   async signUp(req, res) {
-    const { username, password } = req.body;
-
-    if (!authService.validatePasswordStrength(password)) {
-      return res.status(400).send('Password does not meet strength criteria');
-    }
-
-    const savedUser = await userService.createUser(username, password);
+    const newUser = req.body;
+    const savedUser = await userService.createUser(newUser);
     res.status(201).send(savedUser);
   }
   
   async login(req, res) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await userService.findUserByUsername(username);
+    const user = await userService.findUserByEmail(email);
     if (!user) {
-      return res.status(401).send('Invalid credentials');
+      return res.status(401).send('Invalid credentials1');
     }
 
     const isMatch = await authService.comparePassword(password, user.password);
@@ -28,7 +23,7 @@ class AuthController {
     if (isMatch) {
       res.send('Successful');
     } else {
-      res.status(401).send('Invalid credentials');
+      res.status(401).send('Invalid credentials2');
     }
   }
 

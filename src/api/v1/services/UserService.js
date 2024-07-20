@@ -1,14 +1,14 @@
-import UserModel from '../models/UserModel.js';
+import UserModel from '../models/User.js';
 
 class UserService {
 
-  async createUser(username, password) {
-    const user = new UserModel({ username, password });
-    return await user.save();
+  async createUser(user) {
+    const newUser = new UserModel({ ...user });
+    return await newUser.save();
   }
 
-  async findUserByUsername(username) {
-    return await UserModel.findOne({ username });
+  async findUserByEmail(email) {
+    return await UserModel.findOne({ email });
   }
 
 }
