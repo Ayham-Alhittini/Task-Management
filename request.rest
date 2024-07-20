@@ -1,6 +1,4 @@
-########################## Auth Request
-
-# Singup Request
+### Singup Request
 POST http://localhost:5000/auth/singUp
 Content-Type: application/json
 
@@ -11,13 +9,29 @@ Content-Type: application/json
   "password": "Pa$$w0rd"
 }
 
-###
-
-# Login Request
+### Login Request
 POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
   "email": "ayham.hittini268@gmail.com",
   "password": "Pa$$w0rd"
+}
+
+### Logout Request
+DELETE http://localhost:5000/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjliOWUxNmZlNzZkZGQ5NTE1YzFmNzQiLCJpYXQiOjE3MjE0NzUyMzIsImV4cCI6MTcyMTQ3NTgzMn0.kwdljmRNamhIKE7X2VSRCWUWQh6VPiuMfBM-jDMt07s
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjliOWUxNmZlNzZkZGQ5NTE1YzFmNzQiLCJpYXQiOjE3MjE0NzQ1OTUsImV4cCI6MTcyMjMzODU5NX0.707uMTUWbgODqyrmftN7bHUzHzhoxgt9l7H3PG8EuCw"
+}
+
+
+### Generate Access Token Request
+POST http://localhost:5000/auth/generateAccessToken
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjliOWUxNmZlNzZkZGQ5NTE1YzFmNzQiLCJpYXQiOjE3MjE0NzQ1OTUsImV4cCI6MTcyMjMzODU5NX0.707uMTUWbgODqyrmftN7bHUzHzhoxgt9l7H3PG8EuCw"
 }
