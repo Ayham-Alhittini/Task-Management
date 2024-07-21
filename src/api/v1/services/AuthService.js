@@ -33,6 +33,16 @@ class AuthService {
     generateRefreshToken(userId) {
         return jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '10d' });
     }
+
+    async generateAccessTokenFromRefreshToken(refreshToken) {
+        const storedRefreshToken = await this.getRefreshToken(refreshToken);
+        if (!storedRefreshToken) {
+            return null;
+        }
+
+        const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        return this.generateAccessToken(user.userId);
+    }
 }
 
 export default new AuthService();
