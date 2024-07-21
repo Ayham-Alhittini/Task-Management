@@ -1,6 +1,7 @@
 import express from 'express';
 import connectDb from './config/DatabaseConfig.js';
 import authRoute from './api/v1/routes/AuthRoute.js';
+import taskRoute from './api/v1/routes/TaskRoute.js';
 import errorHandler from './api/v1/middlewares/errorHandler.js';
 import authenticationMiddleware from './api/v1/middlewares/AuthMiddleware.js';
 
@@ -17,6 +18,9 @@ app.use('/auth', authRoute);
 // Authentication Middleware
 app.use(authenticationMiddleware);
 app.use(errorHandler);
+
+// Task Routes
+app.use('/task', taskRoute);
 
 // Start the server
 app.listen(PORT, () => console.log(`Server Running on http://localhost:${PORT}`));

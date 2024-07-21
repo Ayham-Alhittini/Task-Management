@@ -1,3 +1,10 @@
+
+####################################################################
+####################################################################
+########################### AUTH REQUESTS ##########################
+####################################################################
+####################################################################
+
 ### Singup Request
 POST http://localhost:5000/auth/singUp
 Content-Type: application/json
@@ -32,5 +39,40 @@ POST http://localhost:5000/auth/generateAccessToken
 Content-Type: application/json
 
 {
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1NTI1NDQsImV4cCI6MTcyMjQxNjU0NH0.8LzfmBovhSLQu7UNo8PYNIYKWBNOJmSsUhkbTv9x9Ko"
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1NjQ5MDMsImV4cCI6MTcyMjQyODkwM30.8fQUkZ5HBZMNrOIkUkjIu6Fu4O79yH0tXkNsdMAaoRk"
 }
+
+####################################################################
+####################################################################
+########################### TASK REQUESTS ##########################
+####################################################################
+####################################################################
+
+### Create Task Request
+POST http://localhost:5000/task/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1Nzg3NTcsImV4cCI6MTcyMTU3OTM1N30.VqHbld-rbBfdyqEc5PvntDA6fY9qMhdOdW31VKYo4qo
+Content-Type: application/json
+
+{
+  "taskTitle": "Task4",
+  "taskDescription": "Task4 descirption ...."
+}
+
+### Get Tasks Request
+GET http://localhost:5000/task/get
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1NjQ5MTcsImV4cCI6MTcyMTU2NTUxN30.vah4V7BrHXuvmBHTlOq_eZdBKrzW3IW9EnixZ7ypY3c
+
+
+### Update Task
+PATCH http://localhost:5000/task/update/669cff2f7199c1ad157b48d7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1Nzc5NzQsImV4cCI6MTcyMTU3ODU3NH0.o76u6Y5_WK0lXpamWprlTqXMVIHd8gXzeW4d1FH3gW8
+Content-Type: application/json
+
+{
+  "taskTitle": "Task3",
+  "taskDescription": "Task3 descirption ...."
+}
+
+### Delete Task
+DELETE http://localhost:5000/task/delete/669cff2f7199c1ad157b48d7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1NzkyMDMsImV4cCI6MTcyMTU3OTgwM30.Csr_X-4xClTL65f_UROVO9I1KUITcsQ8qC60akH7WT8
