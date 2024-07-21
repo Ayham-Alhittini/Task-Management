@@ -65,12 +65,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY
 
 ### Update Task
 PATCH http://localhost:5000/task/update/669cff2f7199c1ad157b48d7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1Nzc5NzQsImV4cCI6MTcyMTU3ODU3NH0.o76u6Y5_WK0lXpamWprlTqXMVIHd8gXzeW4d1FH3gW8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjljY2U2OWI2M2NlOWZkNWVmMjIzY2QiLCJpYXQiOjE3MjE1ODAwNjUsImV4cCI6MTcyMTU4MDY2NX0.i2yOkOgi20ZT9qnVY1iAXUQmyBugwRD4B_Vwk880AZs
 Content-Type: application/json
 
 {
-  "taskTitle": "Task3",
-  "taskDescription": "Task3 descirption ...."
+  "taskTitle": "Task3*",
+  "taskDescription": "Task3 descirption ....*"
 }
 
 ### Delete Task

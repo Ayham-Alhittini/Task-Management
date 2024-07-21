@@ -16,11 +16,13 @@ connectDb();
 app.use('/auth', authRoute);
 
 // Authentication Middleware
-app.use(authenticationMiddleware);
-app.use(errorHandler);
+app.use(authenticationMiddleware); // Make all below routes protected
 
 // Task Routes
 app.use('/task', taskRoute);
+
+// Error Handler Middleware
+app.use(errorHandler);
 
 // Start the server
 app.listen(PORT, () => console.log(`Server Running on http://localhost:${PORT}`));
