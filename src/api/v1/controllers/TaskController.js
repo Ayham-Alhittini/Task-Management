@@ -17,12 +17,7 @@ class TaskController {
         const taskId = req.params.id;
         const updates = req.body;
 
-        const task = await taskService.getTask(taskId);
-
-        if (!task) { return res.status(404).send(); }
-        if (userId !== task.taskAssociatedUser.toString()) { return res.status(403).send(); }
-
-        const updatedTask = await taskService.updateTask(taskId, updates);
+        const updatedTask = await taskService.updateUserTask(userId, taskId, updates);
         res.send(updatedTask);
     }
 
@@ -30,13 +25,8 @@ class TaskController {
         const userId = req.user.userId;
         const taskId = req.params.id;
 
-        const task = await taskService.getTask(taskId);
-
-        if (!task) { return res.status(404).send(); }
-        if (userId !== task.taskAssociatedUser.toString()) { return res.status(403).send(); }
-
-        const updatedTask = await taskService.deleteTask(taskId);
-        res.send(updatedTask);
+        const deletedTask = await taskService.deleteUserTask(userId, taskId);
+        res.send(deletedTask);
     }
 }
 

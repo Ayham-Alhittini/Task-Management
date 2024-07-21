@@ -1,26 +1,46 @@
-
 import Task from '../models/Task.js';
 
 class TaskService {
-    async createTask(taskDate) {
-        const task = new Task({ ...taskDate });
+    async createTask(taskData) {
+        const task = new Task(taskData);
         await task.save();
-    }
-    
-    async updateTask(taskId, updates) {
-        return await Task.findByIdAndUpdate(taskId, updates, { new: true, runValidators: true });
-    }
-
-    async deleteTask(taskId) {
-        return await Task.findByIdAndDelete(taskId);
-    }
-
-    async getTask(taskId) {
-        return await Task.findById(taskId);
     }
 
     async getUserTasks(userId) {
-        return await Task.find({ taskAssociatedUser: userId });
+        return Task.find({ taskAssociatedUser: userId });
+    }
+
+    async updateTask(taskId, updates) {
+        return Task.findByIdAndUpdate(taskId, updates, { new: true, runValidators: true });
+    }
+
+    async deleteTask(taskId) {
+        return Task.findByIdAndDelete(taskId);
+    }
+
+    async getTask(taskId) {
+        return Task.findById(taskId);
+    }
+
+    async verifyTaskOwnership(userId, taskId) {
+        const task = await this.getTask(taskId);
+        if (!task) {
+            throw new Error('Task not found');
+        }
+        if (userId !== task.taskAssociatedUser.toString()) {
+            throw new Error('Forbidden');
+        }
+        return task;
+    }
+
+    async updateUserTask(userId, taskId, updates) {
+        await this.verifyTaskOwnership(userId, taskId);
+        return this.updateTask(taskId, updates);
+    }
+
+    async deleteUserTask(userId, taskId) {
+        await this.verifyTaskOwnership(userId, taskId);
+        return this.deleteTask(taskId);
     }
 }
 

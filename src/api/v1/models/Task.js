@@ -28,13 +28,9 @@ const taskSchema = new mongoose.Schema({
 
 export default mongoose.model('Task', taskSchema);
 
-// const taskSchema = new mongoose.Schema({
-//     taskTitle: {},
-//     taskDescription: {},
-//     taskAssoicatedUser: {},
-//     taskCompletedBy: {},
-//     taskListId: {},
-//     taskPriority: {},
-//     taskDueDate: {},
-//     taskReminderDatetime: {}
-// });
+// taskCompletedBy: {},
+// taskListId: {},
+// taskPriority: {},
+// taskDueDate: {},
+// taskReminderDatetime: {}
+

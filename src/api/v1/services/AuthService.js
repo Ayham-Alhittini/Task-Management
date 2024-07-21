@@ -2,11 +2,27 @@ import 'dotenv/config';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import RefreshToken from '../models/RefreshToken.js';
+import userService from './UserService.js';
 
 class AuthService {
-    async hashPassword(password) {
-        const salt = await bcrypt.genSalt();
-        return await bcrypt.hash(password, salt);
+    async authenticateUser(email, password) {
+        const user = await userService.findUserByEmail(email);
+        if (!user) { return null; }
+
+        const isMatch = await this.comparePassword(password, user.password);
+        if (!isMatch) { return null; }
+
+        const userId = user._id;
+        const credentials = {
+            accessToken: this.generateAccessToken(userId),
+            refreshToken: this.generateRefreshToken(userId)
+        };
+        await this.saveRefreshToken(userId, credentials.refreshToken);
+        return credentials;
+    }
+
+    async logoutUser(userId, refreshToken) {
+        return this.removeRefreshToken(userId, refreshToken);
     }
 
     async comparePassword(plainPassword, hashedPassword) {
