@@ -59,8 +59,8 @@ Content-Type: application/json
 }
 
 ### Get Tasks Request
-GET http://localhost:5000/task/get
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NDcxNzQsImV4cCI6MTcyMTY0Nzc3NH0.x-tjuCF7HRmb98ZS0otyIdnExdi-sD2QcCT3h2KCtEs
+GET http://localhost:5000/task/get?isTaskCompleted=true&sortBy=taskTitle&order=desc&taskTitle=task3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NTI3MzYsImV4cCI6MTcyMTY1MzMzNn0.G3mYwADZHW8uwKIJPK_ZYVvUkZ4-q7Uo_ovxBbt9wxc
 
 
 ### Update Task
@@ -75,3 +75,4 @@ Content-Type: application/json
 ### Delete Task
 DELETE http://localhost:5000/task/delete/669d6cce29a691b1464e46d0
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE1OTMwMTksImV4cCI6MTcyMTU5MzYxOX0.545UcCWrtkRjw-90pEODWgd1HqK-gIW5ecZ-KhiT-hU
+

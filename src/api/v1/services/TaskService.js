@@ -6,19 +6,48 @@ class TaskService {
         await task.save();
     }
 
-    async getUserTasks(userId) {
-        return Task.find({ taskAssociatedUser: userId });
+    getUserTasks(userId, queryParams) {
+        const query = this.buildQuery(userId, queryParams);
+        const sortOptions = this.buildSortOptions(queryParams);
+    
+        return Task.find(query).sort(sortOptions);
     }
-
-    async updateTask(taskId, updates) {
+    
+    buildQuery(userId, queryParams) {
+        const query = { taskAssociatedUser: userId };
+    
+        for (const [key, value] of Object.entries(queryParams)) {
+            if (key !== 'sortBy' && key !== 'order') {
+                query[key] = value;
+            }
+        }
+    
+        return query;
+    }
+    
+    buildSortOptions(queryParams) {
+        const sortOptions = {};
+    
+        if (queryParams.sortBy) {
+            const sortOrder = queryParams.order === 'desc' ? -1 : 1;
+            sortOptions[queryParams.sortBy] = sortOrder;
+        } else {
+            // Default sorting by creation date descending if no sort option is provided
+            sortOptions.createdAt = -1;
+        }
+    
+        return sortOptions;
+    }
+    
+    updateTask(taskId, updates) {
         return Task.findByIdAndUpdate(taskId, updates, { new: true, runValidators: true });
     }
 
-    async deleteTask(taskId) {
+    deleteTask(taskId) {
         return Task.findByIdAndDelete(taskId);
     }
 
-    async getTask(taskId) {
+    getTask(taskId) {
         return Task.findById(taskId);
     }
 

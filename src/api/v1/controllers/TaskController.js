@@ -9,7 +9,8 @@ class TaskController {
 
     async getUserTasks(req, res) {
         const userId = req.user.userId;
-        res.send(await taskService.getUserTasks(userId));
+        const queryParams = req.query;
+        res.send(await taskService.getUserTasks(userId, queryParams));
     }
 
     async updateTask(req, res) {
