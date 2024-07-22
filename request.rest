@@ -50,7 +50,7 @@ Content-Type: application/json
 
 ### Create Task Request
 POST http://localhost:5000/task/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE1OTMwMTksImV4cCI6MTcyMTU5MzYxOX0.545UcCWrtkRjw-90pEODWgd1HqK-gIW5ecZ-KhiT-hU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NDcxNzQsImV4cCI6MTcyMTY0Nzc3NH0.x-tjuCF7HRmb98ZS0otyIdnExdi-sD2QcCT3h2KCtEs
 Content-Type: application/json
 
 {
@@ -60,17 +60,16 @@ Content-Type: application/json
 
 ### Get Tasks Request
 GET http://localhost:5000/task/get
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE1OTMwMTksImV4cCI6MTcyMTU5MzYxOX0.545UcCWrtkRjw-90pEODWgd1HqK-gIW5ecZ-KhiT-hU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NDcxNzQsImV4cCI6MTcyMTY0Nzc3NH0.x-tjuCF7HRmb98ZS0otyIdnExdi-sD2QcCT3h2KCtEs
 
 
 ### Update Task
-PATCH http://localhost:5000/task/update/669d6cce29a691b1464e46d0
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE1OTMwMTksImV4cCI6MTcyMTU5MzYxOX0.545UcCWrtkRjw-90pEODWgd1HqK-gIW5ecZ-KhiT-hU
+PATCH http://localhost:5000/task/update/669d6d0d29a691b1464e46d2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NDcxNzQsImV4cCI6MTcyMTY0Nzc3NH0.x-tjuCF7HRmb98ZS0otyIdnExdi-sD2QcCT3h2KCtEs
 Content-Type: application/json
 
 {
-  "taskTitle": "Task1*",
-  "taskDescription": "Task1 descirption ....*"
+  "isTaskCompleted": true
 }
 
 ### Delete Task
