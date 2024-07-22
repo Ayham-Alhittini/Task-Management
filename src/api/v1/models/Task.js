@@ -26,15 +26,21 @@ const taskSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: true
+    },
+    taskDueDate: {
+        type: Date,
+        required: false,
+        default: null
+    },
+    taskPriority: {
+        type: String,
+        enum: ['Regular', 'Moderate', 'High'],
+        default: 'Regular',
+        required: true
     }
 }, {
     timestamps: true
 });
 
 export default mongoose.model('Task', taskSchema);
-
-// taskListId: {},
-// taskPriority: {},
-// taskDueDate: {},
-// taskReminderDatetime: {}
 

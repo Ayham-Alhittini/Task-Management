@@ -50,7 +50,7 @@ Content-Type: application/json
 
 ### Create Task Request
 POST http://localhost:5000/task/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NDcxNzQsImV4cCI6MTcyMTY0Nzc3NH0.x-tjuCF7HRmb98ZS0otyIdnExdi-sD2QcCT3h2KCtEs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NTQ5MjMsImV4cCI6MTcyMTY1NTUyM30.K7YSaqHxgVBUB99NSUDrMvgATpiBXnUV3w0v59YBjpY
 Content-Type: application/json
 
 {
@@ -59,17 +59,19 @@ Content-Type: application/json
 }
 
 ### Get Tasks Request
-GET http://localhost:5000/task/get?isTaskCompleted=true&sortBy=taskTitle&order=desc&taskTitle=task3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NTI3MzYsImV4cCI6MTcyMTY1MzMzNn0.G3mYwADZHW8uwKIJPK_ZYVvUkZ4-q7Uo_ovxBbt9wxc
+GET http://localhost:5000/task/get?taskPriority=Regular
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NTQ5MjMsImV4cCI6MTcyMTY1NTUyM30.K7YSaqHxgVBUB99NSUDrMvgATpiBXnUV3w0v59YBjpY
 
 
 ### Update Task
 PATCH http://localhost:5000/task/update/669d6d0d29a691b1464e46d2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NDcxNzQsImV4cCI6MTcyMTY0Nzc3NH0.x-tjuCF7HRmb98ZS0otyIdnExdi-sD2QcCT3h2KCtEs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjlkNmJiMzI5YTY5MWIxNDY0ZTQ2YmMiLCJpYXQiOjE3MjE2NTc0MjIsImV4cCI6MTcyMTY1ODAyMn0.6dhpDx5XlvmqMQ9OaNVL0U5xsrT2T6RilCa9HG5RXJA
 Content-Type: application/json
 
 {
-  "isTaskCompleted": true
+  "isTaskCompleted": true,
+  "taskDueDate": "2024-07-23",
+  "taskPriority": "High"
 }
 
 ### Delete Task
