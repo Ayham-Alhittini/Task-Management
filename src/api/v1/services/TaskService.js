@@ -1,9 +1,9 @@
 import Task from '../models/Task.js';
 
 class TaskService {
-    async createTask(taskData) {
+    createTask(taskData) {
         const task = new Task(taskData);
-        await task.save();
+        return task.save();
     }
 
     getUserTasks(userId, queryParams) {

@@ -6,7 +6,6 @@ import errorHandler from './api/v1/middlewares/errorHandler.js';
 import authenticationMiddleware from './api/v1/middlewares/AuthMiddleware.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 // Connect to the database
@@ -24,5 +23,4 @@ app.use('/task', taskRoute);
 // Error Handler Middleware
 app.use(errorHandler);
 
-// Start the server
-app.listen(PORT, () => console.log(`Server Running on http://localhost:${PORT}`));
+export default app;

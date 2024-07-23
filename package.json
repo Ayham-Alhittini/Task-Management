@@ -1,12 +1,16 @@
 {
   "name": "node_express_api",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "nodemon src/server.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:auth": "cross-env NODE_OPTIONS=--experimental-vm-modules jest tests/auth/auth.test.js",
+    "test:task": "cross-env NODE_OPTIONS=--experimental-vm-modules jest tests/task/task.test.js"
   },
   "keywords": [],
   "author": "",
@@ -22,8 +26,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.7.0",
     "globals": "^15.8.0",
-    "nodemon": "^3.1.4"
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
   }
 }

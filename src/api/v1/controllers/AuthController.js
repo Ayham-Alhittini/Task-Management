@@ -6,7 +6,7 @@ class AuthController {
     async signUp(req, res) {
         const newUser = req.body;
         await userService.createUser(newUser);
-        res.status(201).send('Go and confirm your email');
+        res.status(201).send({ message: 'User created successfully' });
     }
 
     async login(req, res) {

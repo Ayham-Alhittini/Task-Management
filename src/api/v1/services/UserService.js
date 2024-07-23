@@ -1,13 +1,17 @@
 import UserModel from '../models/User.js';
 
 class UserService {
-    async createUser(user) {
+    createUser(user) {
         const newUser = new UserModel({ ...user });
-        return await newUser.save();
+        return newUser.save();
     }
 
-    async findUserByEmail(email) {
-        return await UserModel.findOne({ email });
+    findUserByEmail(email) {
+        return UserModel.findOne({ email });
+    }
+
+    getTotalUsersCount() {
+        return UserModel.countDocuments();
     }
 }
 

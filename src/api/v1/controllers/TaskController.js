@@ -3,14 +3,15 @@ import taskService from '../services/TaskService.js';
 
 class TaskController {
     async createTask(req, res) {
-        await taskService.createTask({ ...req.body, taskAssociatedUser: req.user.userId });
-        res.status(201).send();
+        const newTask = await taskService.createTask({ ...req.body, taskAssociatedUser: req.user.userId });
+        res.status(201).send({ task: newTask });
     }
 
     async getUserTasks(req, res) {
         const userId = req.user.userId;
         const queryParams = req.query;
-        res.send(await taskService.getUserTasks(userId, queryParams));
+        const tasks = await taskService.getUserTasks(userId, queryParams);
+        res.send({ tasks });
     }
 
     async updateTask(req, res) {
@@ -19,15 +20,15 @@ class TaskController {
         const updates = req.body;
 
         const updatedTask = await taskService.updateUserTask(userId, taskId, updates);
-        res.send(updatedTask);
+        res.send({ task: updatedTask });
     }
 
     async deleteTask(req, res) {
         const userId = req.user.userId;
         const taskId = req.params.id;
 
-        const deletedTask = await taskService.deleteUserTask(userId, taskId);
-        res.send(deletedTask);
+        await taskService.deleteUserTask(userId, taskId);
+        res.status(204).send();
     }
 }
 
