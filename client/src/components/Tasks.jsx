@@ -1,22 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Stack, Skeleton, TextField, List, Divider, Typography, MenuItem, Select, useTheme } from '@mui/material';
+import { Box, Stack, Skeleton, TextField, List, Divider, Typography, useTheme } from '@mui/material';
 import Task from './Task';
-import { DateTimePicker } from '@mui/lab';
+import { closestCenter, DndContext } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 const Tasks = ({ setSelectedTask }) => {
+
+  const initialTasks = [
+    {
+      id: 1,
+      text: 'Initial Task 1',
+      completed: false,
+      important: false,
+      dueDate: new Date(),
+      reminder: new Date(),
+      steps: [],
+      notes: 'Note for task 1'
+    },
+    {
+      id: 2,
+      text: 'Initial Task 2',
+      completed: true,
+      important: true,
+      dueDate: new Date(),
+      reminder: new Date(),
+      steps: [],
+      notes: 'Note for task 2'
+    },
+  ];
+
   const [loading, setLoading] = useState(true);
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(initialTasks);
   const [newTask, setNewTask] = useState('');
   const [dueDate, setDueDate] = useState(null);
   const [reminder, setReminder] = useState(null);
-  const [category, setCategory] = useState('General');
 
   const theme = useTheme();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
@@ -24,13 +48,12 @@ const Tasks = ({ setSelectedTask }) => {
   const handleAddTask = () => {
     if (newTask.trim()) {
       const newTaskObj = {
-        id: tasks.length,
+        id: tasks.length + 1,
         text: newTask,
         completed: false,
         important: false,
         dueDate,
         reminder,
-        category,
         steps: [],
         notes: ''
       };
@@ -43,6 +66,7 @@ const Tasks = ({ setSelectedTask }) => {
   };
 
   const handleToggleCompleted = (id) => {
+    console.log('completed toggled');
     setTasks(tasks.map(task => 
       task.id === id ? { ...task, completed: !task.completed } : task
     ));
@@ -53,6 +77,20 @@ const Tasks = ({ setSelectedTask }) => {
       task.id === id ? { ...task, important: !task.important } : task
     ));
   };
+
+  const onDragEnd = (event) => {
+    console.log('drag and drop toggled');
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) return;
+
+    setTasks((tasks) => {
+      const oldIndex = tasks.findIndex(task => task.id === active.id);
+      const newIndex = tasks.findIndex(task => task.id === over.id);
+      return arrayMove(tasks, oldIndex, newIndex);
+    });
+};
+
 
   return (
     <Box 
@@ -69,17 +107,7 @@ const Tasks = ({ setSelectedTask }) => {
         </Stack>
       ) : (
         <Box>
-          <Typography variant="h5" gutterBottom>Task Category: {category}</Typography>
-          <Select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            displayEmpty
-            fullWidth
-          >
-            <MenuItem value="General">General</MenuItem>
-            <MenuItem value="Work">Work</MenuItem>
-            <MenuItem value="Personal">Personal</MenuItem>
-          </Select>
+          <Typography variant="h5" gutterBottom>Tasks</Typography>
           
           <TextField 
             label="Add a task" 
@@ -90,19 +118,25 @@ const Tasks = ({ setSelectedTask }) => {
             variant="outlined"
             sx={{ mt: 2 }}
           />
-          <List sx={{ mt: 2 }}>
-            {tasks.map(task => (
-              <React.Fragment key={task.id}>
-                <Task 
-                  task={task}
-                  onToggleCompleted={handleToggleCompleted}
-                  onToggleImportant={handleToggleImportant}
-                  onClick={() => setSelectedTask(task)}
-                />
-                <Divider variant="inset" component="li" />
-              </React.Fragment>
-            ))}
-          </List>
+
+
+          <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+              <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+                <List sx={{ mt: 2 }}>
+                  {
+                    tasks.map(task => (
+                      <Task key={task.id}
+                        task={task}
+                        onToggleCompleted={handleToggleCompleted}
+                        onToggleImportant={handleToggleImportant}
+                        onClick={() => setSelectedTask(task)}
+                      />
+                    ))
+                  }
+                </List>
+              </SortableContext>
+          </DndContext>
+
         </Box>
       )}
     </Box>
