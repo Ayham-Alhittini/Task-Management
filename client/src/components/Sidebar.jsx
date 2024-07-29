@@ -1,12 +1,3 @@
-import { 
-  FormatListBulleted as FormatListBulletedIcon,
-  DateRangeOutlined,
-  GradeOutlined,
-  HomeOutlined,
-  LightModeOutlined,
-  PersonOutlineOutlined,
-  Add 
-} from "@mui/icons-material";
 import {
   Box,
   Divider,
@@ -20,8 +11,17 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
+import { 
+  FormatListBulleted as FormatListBulletedIcon,
+  DateRangeOutlined,
+  GradeOutlined,
+  HomeOutlined,
+  LightModeOutlined,
+  PersonOutlineOutlined,
+  Add 
+} from "@mui/icons-material";
 
-const Sidebar = ({ mode, setMode }) => {
+const Sidebar = ({ showSideBar }) => {
   const theme = useTheme();
   const items = [
     { text: 'My Day', icon: <LightModeOutlined />, href: '#home' },
@@ -37,7 +37,16 @@ const Sidebar = ({ mode, setMode }) => {
   ];
 
   return (
-    <Box flex={1} sx={{ display: { xs: "none", sm: "block" }, height: 'calc(100vh - 64px)', borderRight: `1px solid ${theme.palette.divider}`, boxShadow: '1px 0px 2px rgba(0, 0, 0, 0.1)', bgcolor: theme.palette.background.paper }}>
+    <Box 
+      sx={{ 
+        display: showSideBar ? 'block' : 'none',
+        width: { xs: 250, sm: 300 }, // Adjust width for mobile and desktop
+        height: '100%',
+        borderRight: { xs: 0, sm: `1px solid ${theme.palette.divider}` },
+        boxShadow: { xs: 'none', sm: '1px 0px 2px rgba(0, 0, 0, 0.1)' },
+        bgcolor: theme.palette.background.paper,
+      }}
+    >
       <Box sx={{ width: "100%", height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', mt: '10px' }}>
         <Box>
           <List>

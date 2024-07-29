@@ -1,20 +1,15 @@
 import React from 'react';
-import { Box, Typography, TextField, List, ListItem, ListItemText, Divider, Button, useTheme } from '@mui/material';
-import { DateTimePicker } from '@mui/lab';
+import { Box, Typography, TextField, List, ListItem, ListItemText, Divider, Button, useTheme, IconButton, Stack } from '@mui/material';
+import { ExitToAppOutlined as ExitToAppIcon, Delete } from '@mui/icons-material';
 
 const TaskInfo = ({ task, setTask }) => {
   const theme = useTheme();
+
   if (!task) {
     return (
-      <Box p={2} flex={1.3}>
-        <Typography variant="h6">Select a task to see details</Typography>
-      </Box>
+      <></>
     );
   }
-
-  const handleDateChange = (field, date) => {
-    setTask({ ...task, [field]: date });
-  };
 
   const handleTextChange = (field, text) => {
     setTask({ ...task, [field]: text });
@@ -29,37 +24,20 @@ const TaskInfo = ({ task, setTask }) => {
     setTask({ ...task, steps: newSteps });
   };
 
+  const handleDeleteTask = () => {
+    // Implement the delete task functionality
+    // Example:
+    // deleteTask(task.id);
+  };
+
   return (
-    <Box p={2} flex={1.3} sx={{ display: { xs: "none", sm: "block" }, height: 'calc(100vh - 64px)', borderLeft: `1px solid ${theme.palette.divider}`, boxShadow: '-1px 0px 2px rgba(0, 0, 0, 0.1)', bgcolor: theme.palette.background.paper }}>
+    <Box position={'relative'} p={2} flex={1} sx={{ display: { xs: "none", sm: "block" }, height: 'calc(100vh - 64px)', borderLeft: `1px solid ${theme.palette.divider}`, boxShadow: '-1px 0px 2px rgba(0, 0, 0, 0.1)', bgcolor: theme.palette.background.paper }}>
       <Typography variant="h5" gutterBottom>{task.text}</Typography>
       
       <TextField
         label="Task Name"
         value={task.text}
         onChange={(e) => handleTextChange('text', e.target.value)}
-        fullWidth
-        variant="outlined"
-        sx={{ mt: 2 }}
-      />
-
-      <DateTimePicker
-        label="Due Date"
-        value={task.dueDate}
-        onChange={(date) => handleDateChange('dueDate', date)}
-        renderInput={(params) => <TextField {...params} fullWidth sx={{ mt: 2 }} />}
-      />
-
-      <DateTimePicker
-        label="Reminder"
-        value={task.reminder}
-        onChange={(date) => handleDateChange('reminder', date)}
-        renderInput={(params) => <TextField {...params} fullWidth sx={{ mt: 2 }} />}
-      />
-
-      <TextField
-        label="Category"
-        value={task.category}
-        onChange={(e) => handleTextChange('category', e.target.value)}
         fullWidth
         variant="outlined"
         sx={{ mt: 2 }}
@@ -101,6 +79,16 @@ const TaskInfo = ({ task, setTask }) => {
           </React.Fragment>
         ))}
       </List>
+
+      {/* Footer Actions */}
+      <Stack direction={'row'} width={'100%'} position={'absolute'} right={'0'} bottom={'0'} mt={2} textAlign="center" justifyContent={'space-between'} sx={{ borderTop: `1px solid ${theme.palette.divider}`, pt: 2 }}>
+        <IconButton color="primary" onClick={() => setTask(null)} aria-label="exit">
+          <ExitToAppIcon />
+        </IconButton>
+        <IconButton color="error" onClick={handleDeleteTask} aria-label="delete task">
+          <Delete />
+        </IconButton>
+      </Stack>
     </Box>
   );
 };

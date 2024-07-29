@@ -6,7 +6,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { CSS } from '@dnd-kit/utilities';
 
-const Task = ({ task, onToggleCompleted, onToggleImportant }) => {
+const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
 
   const theme = useTheme();
 
@@ -28,6 +28,9 @@ const Task = ({ task, onToggleCompleted, onToggleImportant }) => {
   return (
     <ListItem
 
+      
+      onClick={onClick}
+
       ref={setNodeRef}
 
       style={{
@@ -37,7 +40,8 @@ const Task = ({ task, onToggleCompleted, onToggleImportant }) => {
         borderRadius: '8px',
         margin: '8px 0',
         padding: '16px',
-        backgroundColor: getTaskColor()
+        backgroundColor: getTaskColor(),
+        cursor: 'pointer'
       }}
     >
       <IconButton {...attributes} {...listeners}>

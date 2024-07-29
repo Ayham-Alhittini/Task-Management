@@ -62,7 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = ({ mode, setMode }) => {
+const Navbar = ({ mode, setMode, menuClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -83,6 +83,7 @@ const Navbar = ({ mode, setMode }) => {
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 2 }}
+              onClick={menuClick}
             >
               <MenuIcon />
           </IconButton>
@@ -112,11 +113,11 @@ const Navbar = ({ mode, setMode }) => {
           vertical: 'top',
           horizontal: 'right',
         }}
-        sx={{ mt: '45px' }} // Adjust the value as needed
+        sx={{ mt: '45px', justifyContent: 'center' }} // Adjust the value as needed
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ cursor: 'default' }}>Ayham Alhettini</MenuItem>
         <MenuItem>
           <ModeNight sx={{ mr: 2 }} />
           Dark Mode
