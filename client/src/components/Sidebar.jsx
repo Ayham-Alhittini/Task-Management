@@ -11,14 +11,14 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
-import { 
+import {
   FormatListBulleted as FormatListBulletedIcon,
   DateRangeOutlined,
   GradeOutlined,
   HomeOutlined,
   LightModeOutlined,
   PersonOutlineOutlined,
-  Add 
+  Add
 } from "@mui/icons-material";
 
 const Sidebar = ({ showSideBar }) => {
@@ -37,8 +37,8 @@ const Sidebar = ({ showSideBar }) => {
   ];
 
   return (
-    <Box 
-      sx={{ 
+    <Box
+      sx={{
         display: showSideBar ? 'block' : 'none',
         width: { xs: 250, sm: 300 }, // Adjust width for mobile and desktop
         height: '100%',

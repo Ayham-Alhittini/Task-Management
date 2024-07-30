@@ -14,6 +14,7 @@ import {
   Switch,
 } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -78,14 +79,14 @@ const Navbar = ({ mode, setMode, menuClick }) => {
       <StyledToolbar>
         <Stack direction={'row'} alignItems={'center'}>
           <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-              onClick={menuClick}
-            >
-              <MenuIcon />
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+            onClick={menuClick}
+          >
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
             To Do
@@ -123,11 +124,15 @@ const Navbar = ({ mode, setMode, menuClick }) => {
           Dark Mode
           <Switch
             checked={mode === "dark"}
-            onChange={ () => setMode(mode === "light" ? "dark" : "light")}
+            onChange={() => setMode(mode === "light" ? "dark" : "light")}
             sx={{ ml: 'auto' }}
           />
         </MenuItem>
-        <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+        <Link to={'/auth/signin'} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <MenuItem onClick={handleMenuClose}>
+            Logout
+          </MenuItem>
+        </Link>
       </Menu>
 
     </AppBar>

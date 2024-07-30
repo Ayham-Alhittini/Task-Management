@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, TextField, List, ListItem, ListItemText, Divider, Button, useTheme, IconButton, Stack } from '@mui/material';
 import { ExitToAppOutlined as ExitToAppIcon, Delete } from '@mui/icons-material';
 
-const TaskInfo = ({ task, setTask }) => {
+const TaskInfo = ({ task, setTask, deleteTask }) => {
   const theme = useTheme();
 
   if (!task) {
@@ -25,9 +25,8 @@ const TaskInfo = ({ task, setTask }) => {
   };
 
   const handleDeleteTask = () => {
-    // Implement the delete task functionality
-    // Example:
-    // deleteTask(task.id);
+    deleteTask(task.id);
+    setTask(null);
   };
 
   return (

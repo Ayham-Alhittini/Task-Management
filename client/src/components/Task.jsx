@@ -27,8 +27,6 @@ const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
 
   return (
     <ListItem
-
-      
       onClick={onClick}
 
       ref={setNodeRef}
@@ -60,6 +58,7 @@ const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
           }}
         />
       </ListItemIcon>
+
       <ListItemText 
         primary={task.text} 
         secondary={
@@ -78,6 +77,7 @@ const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
         }
         style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
       />
+      
       <ListItemSecondaryAction>
         <IconButton edge="end" onClick={() => onToggleImportant(task.id)}>
           {task.important ? <StarIcon color="primary" /> : <StarBorderIcon />}

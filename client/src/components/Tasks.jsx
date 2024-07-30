@@ -67,6 +67,10 @@ const Tasks = () => {
     setSelectedTask(task);
   };
 
+  const onDeleteTask = (taskId)  => {
+    setTasks(tasks => tasks.filter(task => task.id !== taskId));
+  }
+
   return (
     <Stack 
       direction={'row'}
@@ -140,7 +144,7 @@ const Tasks = () => {
           </Box>
         )}
       </Box>
-      <TaskInfo task={selectedTask} setTask={setSelectedTask} />
+      <TaskInfo task={selectedTask} setTask={setSelectedTask} deleteTask={onDeleteTask} />
     </Stack>
   );
 };
