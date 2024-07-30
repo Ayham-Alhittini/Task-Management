@@ -6,7 +6,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  TextField,
+  styled,
   Tooltip,
   Typography,
   useTheme
@@ -17,72 +17,96 @@ import {
   GradeOutlined,
   HomeOutlined,
   LightModeOutlined,
-  PersonOutlineOutlined,
-  Add
+  PersonOutlineOutlined
 } from "@mui/icons-material";
+import MuiDrawer from '@mui/material/Drawer';
+import { NavLink } from 'react-router-dom';
 
-const Sidebar = ({ showSideBar }) => {
+const Sidebar = ({ open, isLargeScreen }) => {
   const theme = useTheme();
+
   const items = [
-    { text: 'My Day', icon: <LightModeOutlined />, href: '#home' },
-    { text: 'Important', icon: <GradeOutlined />, href: '#important' },
-    { text: 'Planned', icon: <DateRangeOutlined />, href: '#planned' },
-    { text: 'Assigned to me', icon: <PersonOutlineOutlined />, href: '#assigned' },
-    { text: 'Tasks', icon: <HomeOutlined />, href: '#tasks' },
+    { text: 'My Day', icon: <LightModeOutlined />, to: '/tasks/today' },
+    { text: 'Important', icon: <GradeOutlined />, to: '/tasks/important' },
+    { text: 'Planned', icon: <DateRangeOutlined />, to: '/tasks/planned' },
+    { text: 'Assigned to me', icon: <PersonOutlineOutlined />, to: '/tasks/assigned_to_me' },
+    { text: 'Tasks', icon: <HomeOutlined />, to: '/tasks/inbox' },
   ];
 
   const lists = [
-    { text: 'Test List 1', href: '#test1', count: 2, icon: <FormatListBulletedIcon /> },
-    { text: 'Test List 2', href: '#test2', count: 4, icon: <FormatListBulletedIcon /> },
+    { text: 'Test List 1', to: '/test1', count: 2, icon: <FormatListBulletedIcon /> },
+    { text: 'Test List 2', to: '/test2', count: 4, icon: <FormatListBulletedIcon /> },
   ];
 
+  const drawerWidth = 240;
+
+  const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ open }) => ({
+      '& .MuiDrawer-paper': {
+        position: isLargeScreen ? 'relative' : 'absolute',
+        top: isLargeScreen ? '0' : '57px',
+        whiteSpace: 'nowrap',
+        width: open ? drawerWidth : 0,
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        boxSizing: 'border-box',
+        ...(!open && {
+          overflowX: 'hidden',
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+          width: 0,
+        }),
+      },
+    }),
+  );
+
   return (
-    <Box
-      sx={{
-        display: showSideBar ? 'block' : 'none',
-        width: { xs: 250, sm: 300 }, // Adjust width for mobile and desktop
-        height: '100%',
-        borderRight: { xs: 0, sm: `1px solid ${theme.palette.divider}` },
-        boxShadow: { xs: 'none', sm: '1px 0px 2px rgba(0, 0, 0, 0.1)' },
-        bgcolor: theme.palette.background.paper,
-      }}
-    >
-      <Box sx={{ width: "100%", height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', mt: '10px' }}>
-        <Box>
-          <List>
-            {items.map((item, index) => (
-              <ListItem disablePadding key={index}>
-                <ListItemButton component="a" href={item.href} sx={{ '&:hover': { bgcolor: theme.palette.action.hover } }}>
-                  <Tooltip title={item.text} placement="right" arrow>
-                    <ListItemIcon sx={{ minWidth: 32 }}>{item.icon}</ListItemIcon> {/* Adjust minWidth to reduce space */}
-                  </Tooltip>
+    <Drawer variant="permanent" open={open}>
+      <List>
+        {items.map((item, index) => (
+          <ListItem disablePadding key={index}>
+            <ListItemButton
+              component={NavLink}
+              to={item.to}
+              sx={{
+                '&:hover': { bgcolor: theme.palette.action.hover },
+                '&.active': { bgcolor: theme.palette.action.selected }
+              }}
+            >
+              <Tooltip title={item.text} placement="right" arrow>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <ListItemIcon sx={{ minWidth: 32 }}>{item.icon}</ListItemIcon> {/* Adjust minWidth to reduce space */}
                   <ListItemText primary={item.text} sx={{ marginLeft: 0 }} /> {/* Remove margin */}
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-
-          <Divider sx={{ my: 2 }} />
-
-          <List>
-            {lists.map((list, index) => (
-              <ListItem disablePadding key={index}>
-                <ListItemButton component="a" href={list.href} sx={{ '&:hover': { bgcolor: theme.palette.action.hover } }}>
-                  <ListItemIcon sx={{ minWidth: 32 }}>{list.icon}</ListItemIcon> {/* Adjust minWidth to reduce space */}
-                  <ListItemText primary={list.text} sx={{ marginLeft: 0 }} /> {/* Remove margin */}
-                  <Typography variant="body2" sx={{ ml: 2 }}>{list.count}</Typography>
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-
-          <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: '0 10px' }}>
-            <Add sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-            <TextField label="New List" variant="standard" />
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+                </Box>
+              </Tooltip>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider sx={{ my: 1 }} />
+      <List>
+        {lists.map((list, index) => (
+          <ListItem disablePadding key={index}>
+            <ListItemButton
+              component={NavLink}
+              to={list.to}
+              sx={{
+                '&:hover': { bgcolor: theme.palette.action.hover },
+                '&.active': { bgcolor: theme.palette.action.selected }
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 32 }}>{list.icon}</ListItemIcon> {/* Adjust minWidth to reduce space */}
+              <ListItemText primary={list.text} sx={{ marginLeft: 0 }} /> {/* Remove margin */}
+              <Typography variant="body2" sx={{ ml: 2 }}>{list.count}</Typography>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
   );
 };
 

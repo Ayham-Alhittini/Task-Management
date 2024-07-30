@@ -5,8 +5,21 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-ki
 import { AddCircleOutline } from '@mui/icons-material';
 import Task from './Task'; // Assuming Task component is defined elsewhere
 import TaskInfo from './TaskInfo';
+import { useParams } from 'react-router-dom';
 
 const Tasks = () => {
+
+  const params = useParams();
+
+  const categories = {
+    today: 'My Day',
+    important: 'Important',
+    planned: 'Planned',
+    assigned_to_me: 'Assigned to me',
+    inbox: 'Tasks'
+  };
+
+
   const initialTasks = [
     {
       id: 1,
@@ -24,6 +37,7 @@ const Tasks = () => {
   const [tasks, setTasks] = useState(initialTasks);
   const [taskText, setTaskText] = useState('');
   const [selectedTask, setSelectedTask] = useState(null);
+  const [category, setCategory] = useState(null);
 
   const theme = useTheme();
 
@@ -33,6 +47,10 @@ const Tasks = () => {
     }, 100);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (params) setCategory(params.category);
+  }, [params]);
 
   const handleAddTask = () => {
     if (taskText.trim()) {
@@ -48,7 +66,8 @@ const Tasks = () => {
   };
 
   const handleToggleCompleted = (id) => {
-    setTasks(tasks.map(task => 
+    console.log('entered');
+    setTasks(tasks.map(task =>
       task.id === id ? { ...task, completed: !task.completed } : task
     ));
   };
@@ -67,16 +86,16 @@ const Tasks = () => {
     setSelectedTask(task);
   };
 
-  const onDeleteTask = (taskId)  => {
+  const onDeleteTask = (taskId) => {
     setTasks(tasks => tasks.filter(task => task.id !== taskId));
   }
 
   return (
-    <Stack 
+    <Stack
       direction={'row'}
-      flex={6} 
+      flex={6}
     >
-      <Box 
+      <Box
         flex={5}
         p={2}
         bgcolor={theme.palette.mode === 'light' ? '#FAF9F8' : '#000'}
@@ -90,8 +109,8 @@ const Tasks = () => {
           </Stack>
         ) : (
           <Box>
-            <Typography variant="h5" gutterBottom>Tasks</Typography>
-            
+            <Typography variant="h5" gutterBottom>{categories[category]}</Typography>
+
             {/* Task Input Bar */}
             <Box display="flex" alignItems="center" mb={2}>
               <TextField

@@ -6,7 +6,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { CSS } from '@dnd-kit/utilities';
 
-const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
+const Task = ({ task, onToggleCompleted, onClick }) => {
 
   const theme = useTheme();
 
@@ -16,7 +16,7 @@ const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
     setNodeRef,
     transform,
     transition
-  } = useSortable({id: task.id});
+  } = useSortable({ id: task.id });
 
   const getTaskColor = () => {
     if (theme.palette.mode === 'dark') {
@@ -52,15 +52,15 @@ const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
           checked={task.completed}
           tabIndex={-1}
           disableRipple
-          onChange={(e) => {
-            e.stopPropagation();
+          onClick={(event) => {
+            event.stopPropagation();
             onToggleCompleted(task.id);
           }}
         />
       </ListItemIcon>
 
-      <ListItemText 
-        primary={task.text} 
+      <ListItemText
+        primary={task.text}
         secondary={
           <>
             {task.dueDate && (
@@ -77,9 +77,9 @@ const Task = ({ task, onToggleCompleted, onToggleImportant, onClick }) => {
         }
         style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
       />
-      
+
       <ListItemSecondaryAction>
-        <IconButton edge="end" onClick={() => onToggleImportant(task.id)}>
+        <IconButton edge="end">
           {task.important ? <StarIcon color="primary" /> : <StarBorderIcon />}
         </IconButton>
       </ListItemSecondaryAction>
