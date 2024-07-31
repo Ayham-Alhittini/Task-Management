@@ -1,18 +1,18 @@
 import React from 'react';
-import { Box, Typography, TextField, List, ListItem, ListItemText, Divider, Button, useTheme, IconButton, Stack } from '@mui/material';
+import { Box, Typography, TextField, List, ListItem, ListItemText, Divider, Button, useTheme, IconButton, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { ExitToAppOutlined as ExitToAppIcon, Delete } from '@mui/icons-material';
+import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 
 const TaskInfo = ({ task, setTask, deleteTask }) => {
   const theme = useTheme();
 
   if (!task) {
-    return (
-      <></>
-    );
+    return <></>;
   }
 
-  const handleTextChange = (field, text) => {
-    setTask({ ...task, [field]: text });
+  const handleTextChange = (field, value) => {
+    setTask({ ...task, [field]: value });
   };
 
   const handleAddStep = (step) => {
@@ -27,6 +27,12 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
   const handleDeleteTask = () => {
     deleteTask(task.id);
     setTask(null);
+  };
+
+  const handlePriorityChange = (event, newPriority) => {
+    if (newPriority !== null) {
+      setTask({ ...task, priority: newPriority });
+    }
   };
 
   return (
@@ -50,6 +56,28 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
         variant="outlined"
         multiline
         rows={4}
+        sx={{ mt: 2 }}
+      />
+
+      {/* Due Date */}
+      <DatePicker
+        label="Due Date"
+        value={task.dueDate ? dayjs(task.dueDate) : null}
+        onChange={(date) => handleTextChange('dueDate', date)}
+        textField={(params) => <TextField {...params} fullWidth sx={{ mt: 2 }} />}
+        fullWidth
+        minDate={dayjs()}
+        sx={{ mt: 2 }}
+      />
+
+      {/* Reminder */}
+      <DateTimePicker
+        label="Reminder"
+        value={task.reminder ? dayjs(task.reminder) : null}
+        onChange={(dateTime) => handleTextChange('reminder', dateTime)}
+        textField={(params) => <TextField {...params} fullWidth sx={{ mt: 2 }} />}
+        fullWidth
+        minDateTime={dayjs()}
         sx={{ mt: 2 }}
       />
 
@@ -78,6 +106,44 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
           </React.Fragment>
         ))}
       </List>
+
+      {/* Task Priority */}
+      <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>Priority</Typography>
+      <ToggleButtonGroup
+        value={task.priority || 'Regular'}
+        exclusive
+        onChange={handlePriorityChange}
+        aria-label="task priority"
+        sx={{ mt: 2 }}
+      >
+        <ToggleButton
+          value="Regular"
+          aria-label="Regular"
+          sx={{
+            '&.Mui-selected': { bgcolor: '#d3d3d3' }
+          }}
+        >
+          Regular
+        </ToggleButton>
+        <ToggleButton
+          value="Moderate"
+          aria-label="Moderate"
+          sx={{
+            '&.Mui-selected': { bgcolor: '#ffb74d' }
+          }}
+        >
+          Moderate
+        </ToggleButton>
+        <ToggleButton
+          value="High"
+          aria-label="High"
+          sx={{
+            '&.Mui-selected': { bgcolor: '#f44336' }
+          }}
+        >
+          High
+        </ToggleButton>
+      </ToggleButtonGroup>
 
       {/* Footer Actions */}
       <Stack direction={'row'} width={'100%'} position={'absolute'} right={'0'} bottom={'0'} mt={2} textAlign="center" justifyContent={'space-between'} sx={{ borderTop: `1px solid ${theme.palette.divider}`, pt: 2 }}>
