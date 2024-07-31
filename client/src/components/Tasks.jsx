@@ -7,7 +7,7 @@ import Task from './Task'; // Assuming Task component is defined elsewhere
 import TaskInfo from './TaskInfo';
 import { useParams } from 'react-router-dom';
 
-const Tasks = () => {
+const Tasks = ({ isLargeScreen }) => {
 
   const params = useParams();
 
@@ -49,7 +49,10 @@ const Tasks = () => {
   }, []);
 
   useEffect(() => {
-    if (params) setCategory(params.category);
+    if (params) {
+      setCategory(params.category);
+      setSelectedTask(null);
+    }
   }, [params]);
 
   const handleAddTask = () => {
@@ -96,6 +99,7 @@ const Tasks = () => {
       flex={6}
     >
       <Box
+        display={selectedTask && !isLargeScreen ? 'none' : 'block'}
         flex={5}
         p={2}
         bgcolor={theme.palette.mode === 'light' ? '#FAF9F8' : '#000'}

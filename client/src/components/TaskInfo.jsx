@@ -30,9 +30,9 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
   };
 
   return (
-    <Box position={'relative'} p={2} flex={1} sx={{ display: { xs: "none", sm: "block" }, height: 'calc(100vh - 64px)', borderLeft: `1px solid ${theme.palette.divider}`, boxShadow: '-1px 0px 2px rgba(0, 0, 0, 0.1)', bgcolor: theme.palette.background.paper }}>
+    <Box position={'relative'} p={2} flex={1} sx={{ height: 'calc(100vh - 64px)', borderLeft: `1px solid ${theme.palette.divider}`, boxShadow: '-1px 0px 2px rgba(0, 0, 0, 0.1)', bgcolor: theme.palette.background.paper }}>
       <Typography variant="h5" gutterBottom>{task.text}</Typography>
-      
+
       <TextField
         label="Task Name"
         value={task.text}

@@ -29,7 +29,7 @@ function App() {
           <Navbar setMode={setMode} mode={mode} menuClick={() => setOpen(!open)} />
           <Stack direction="row">
             <Sidebar open={open} onDrawerToggle={() => setOpen(!open)} isLargeScreen={isLargeScreen} />
-            <Tasks />
+            <Tasks isLargeScreen={isLargeScreen} />
           </Stack>
         </Box>
       </ThemeProvider>
