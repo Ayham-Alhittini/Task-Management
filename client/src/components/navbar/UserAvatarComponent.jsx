@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Avatar, Menu, MenuItem, Switch } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ModeNight } from "@mui/icons-material";
+import { useMode } from "../../context/ModeContext";
 
-const UserAvatarComponent = ({ mode, setMode }) => {
+const UserAvatarComponent = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const { mode, setMode } = useMode();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);

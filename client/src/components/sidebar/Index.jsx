@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material/styles";
 import DrawerComponent from "./DrawerComponent";
 import SidebarList from "./SidebarList";
 import SidebarItem from "./SidebarItem";
@@ -12,8 +11,7 @@ import {
 } from "@mui/icons-material";
 import { List } from "@mui/material";
 
-const Sidebar = ({ open, isLargeScreen }) => {
-  const theme = useTheme();
+const Sidebar = () => {
 
   const items = [
     { text: 'My Day', icon: <LightModeOutlined />, to: '/tasks/today' },
@@ -29,11 +27,11 @@ const Sidebar = ({ open, isLargeScreen }) => {
   ];
 
   return (
-    <DrawerComponent variant="permanent" open={open} islargescreen={isLargeScreen + ""} theme={theme}>
-      <SidebarList items={items} theme={theme} />
+    <DrawerComponent variant="permanent">
+      <SidebarList items={items} />
       <List>
         {lists.map((list, index) => (
-          <SidebarItem key={index} item={list} count={list.count} theme={theme} />
+          <SidebarItem key={index} item={list} count={list.count} />
         ))}
       </List>
     </DrawerComponent>

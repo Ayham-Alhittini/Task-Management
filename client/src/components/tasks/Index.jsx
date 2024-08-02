@@ -6,10 +6,12 @@ import TaskList from './TaskList';
 import TaskLoader from './TaskLoader';
 import TaskInfo from './taskinfo/Index';
 import { arrayMove } from '@dnd-kit/sortable';
+import { useSidebarStatus } from '../../context/SidebarStatusContext';
 
-const Tasks = ({ isLargeScreen }) => {
+const Tasks = () => {
   const theme = useTheme();
   const params = useParams();
+  const { isLargeScreen } = useSidebarStatus();
 
   const categories = {
     today: 'My Day',

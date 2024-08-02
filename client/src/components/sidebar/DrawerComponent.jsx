@@ -1,12 +1,15 @@
 import { styled } from "@mui/material/styles";
+import { useSidebarStatus } from '../../context/SidebarStatusContext';
 import MuiDrawer from "@mui/material/Drawer";
 
 const drawerWidth = 240;
 
-const DrawerComponent = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open, islargescreen }) => ({
+const DrawerComponent = styled(MuiDrawer)(({ theme }) => {
+  const { open, isLargeScreen } = useSidebarStatus();
+
+  return {
     '& .MuiDrawer-paper': {
-      position: islargescreen === 'true' ? 'relative' : 'absolute',
+      position: isLargeScreen ? 'relative' : 'absolute',
       whiteSpace: 'nowrap',
       width: open ? drawerWidth : 0,
       transition: theme.transitions.create('width', {
@@ -23,7 +26,7 @@ const DrawerComponent = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !=
         width: 0,
       }),
     },
-  }),
-);
+  };
+});
 
 export default DrawerComponent;
