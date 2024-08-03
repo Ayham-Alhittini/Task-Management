@@ -5,16 +5,16 @@ const TaskDetails = ({ task, handleTextChange }) => (
   <>
     <TextField
       label="Task Name"
-      value={task.text}
-      onChange={(e) => handleTextChange('text', e.target.value)}
+      value={task.taskTitle}
+      onChange={(e) => handleTextChange('taskTitle', e.target.value)}
       fullWidth
       variant="outlined"
       sx={{ mt: 2 }}
     />
     <TextField
-      label="Notes"
-      value={task.notes || ''}
-      onChange={(e) => handleTextChange('notes', e.target.value)}
+      label="Task Description"
+      value={task.taskDescription || ''}
+      onChange={(e) => handleTextChange('taskDescription', e.target.value)}
       fullWidth
       variant="outlined"
       multiline

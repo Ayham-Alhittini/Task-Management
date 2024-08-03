@@ -2,14 +2,10 @@ import 'dotenv/config';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import RefreshToken from '../models/RefreshToken.js';
-import userService from './UserService.js';
 
 class AuthService {
-    async authenticateUser(email, password) {
-        const user = await userService.findUserByEmail(email);
-        if (!user) { return null; }
-
-        const isMatch = await this.comparePassword(password, user.password);
+    async authenticateUser(user, enteredPassword) {
+        const isMatch = await this.comparePassword(enteredPassword, user.password);
         if (!isMatch) { return null; }
 
         const userId = user._id;
@@ -43,7 +39,7 @@ class AuthService {
     }
 
     generateAccessToken(userId) {
-        return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+        return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
     }
 
     generateRefreshToken(userId) {

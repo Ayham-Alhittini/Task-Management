@@ -3,6 +3,7 @@ import Home from '../pages/Home';
 import Auth from '../pages/Auth';
 import SignIn from '../components/auth/SignIn';
 import SignUp from '../components/auth/SignUp';
+import ProtectedRoute from './ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/tasks/:category',
-    element: <Home />
+    element: <ProtectedRoute element={Home} />
   },
   {
     path: '/auth',

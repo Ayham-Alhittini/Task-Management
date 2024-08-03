@@ -9,20 +9,30 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Copyright from './Copyright'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yub from 'yup';
+import Alert from '@mui/material/Alert';
+
+import authService from '../../services/AuthService';
 
 const singInSchema = yub.object().shape({
   email: yub.string().email("Please enter a valid email").required("Required"),
   password: yub.string().required("Required")
 });
 
-export default function SignIn() {
+function SignIn() {
 
-  const onSubmit = async (event) => {
-    await new Promise(resolve => setTimeout(() => resolve(), 3000));
-    console.log(values)
+  const navigate = useNavigate();
+  const [serverError, setServerError] = React.useState();
+
+  const onSubmit = async () => {
+    try {
+      await authService.singIn(values);
+      navigate('/');
+    } catch (error) {
+      setServerError(error.response.data.message);
+    }
   };
 
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
@@ -50,6 +60,9 @@ export default function SignIn() {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
+
+      {serverError && <Alert severity="error" sx={{ my: '10px' }} onClose={() => setServerError(undefined)}>{serverError}</Alert>}
+
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <TextField
           margin="normal"
@@ -61,7 +74,6 @@ export default function SignIn() {
           label="Email Address"
           name="email"
           autoComplete="email"
-          autoFocus
           error={errors.email && touched.email}
           helperText={errors.email && touched.email ? errors.email : ''}
         />
@@ -107,3 +119,5 @@ export default function SignIn() {
     </Box>
   );
 }
+
+export default SignIn;

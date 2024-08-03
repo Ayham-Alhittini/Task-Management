@@ -1,36 +1,48 @@
-import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material'
+import * as React from 'react';
+import { Alert, Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import Copyright from './Copyright';
 import { useFormik } from 'formik';
-import * as yub from 'yup';
+import * as yup from 'yup';
+
+import authService from '../../services/AuthService';
 
 const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-// min 6 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit
 
-const singUpSchema = yub.object().shape({
-  firstName: yub.string().required("Required"),
-  lastName: yub.string().required("Required"),
-  email: yub.string().email("Please enter a valid email").required("Required"),
-  password: yub.string().min(6).matches(passwordRules, { message: "Please create a stronger password." }).required("Required")
+const signUpSchema = yup.object().shape({
+  firstName: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  email: yup.string().email("Please enter a valid email").required("Required"),
+  password: yup.string().min(6).matches(passwordRules, { message: "Please create a stronger password." }).required("Required")
 });
 
 function SignUp() {
 
-  const onSubmit = async (event) => {
-    await new Promise(resolve => setTimeout(() => resolve(), 3000));
-    console.log(values)
+  const navigate = useNavigate();
+  const [serverError, setServerError] = React.useState();
+
+  const onSubmit = async () => {
+    try {
+      await authService.singUp(values);
+      navigate('/auth/signin');
+    } catch (error) {
+      setServerError(error.response.data.message);
+    }
   };
 
-  const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+  const formik = useFormik({
     initialValues: {
+      firstName: '',
+      lastName: '',
       email: '',
       password: ''
     },
-    validationSchema: singUpSchema,
+    validationSchema: signUpSchema,
     onSubmit
-  })
+  });
+
+  const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = formik;
 
   return (
     <Box
@@ -48,6 +60,9 @@ function SignUp() {
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
+
+      {serverError && <Alert severity="error" sx={{ my: '10px' }} onClose={() => setServerError(undefined)}>{serverError}</Alert>}
+
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
@@ -57,13 +72,11 @@ function SignUp() {
               onBlur={handleBlur}
               autoComplete="given-name"
               name="firstName"
-              required
               fullWidth
               id="firstName"
               label="First Name"
-              autoFocus
-              error={errors.firstName && touched.firstName}
-              helperText={errors.firstName && touched.firstName ? errors.firstName : ''}
+              error={touched.firstName && Boolean(errors.firstName)}
+              helperText={touched.firstName && errors.firstName}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -76,8 +89,8 @@ function SignUp() {
               label="Last Name"
               name="lastName"
               autoComplete="family-name"
-              error={errors.lastName && touched.lastName}
-              helperText={errors.lastName && touched.lastName ? errors.lastName : ''}
+              error={touched.lastName && Boolean(errors.lastName)}
+              helperText={touched.lastName && errors.lastName}
             />
           </Grid>
           <Grid item xs={12}>
@@ -90,8 +103,8 @@ function SignUp() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              error={errors.email && touched.email}
-              helperText={errors.email && touched.email ? errors.email : ''}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
             />
           </Grid>
           <Grid item xs={12}>
@@ -105,8 +118,8 @@ function SignUp() {
               type="password"
               id="password"
               autoComplete="new-password"
-              error={errors.password && touched.password}
-              helperText={errors.password && touched.password ? errors.password : ''}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
             />
           </Grid>
         </Grid>
@@ -125,7 +138,7 @@ function SignUp() {
         <Copyright sx={{ mt: 5 }} />
       </Box>
     </Box>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

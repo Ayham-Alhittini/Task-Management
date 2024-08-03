@@ -4,7 +4,7 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 const TaskPriority = ({ task, handlePriorityChange }) => (
   <>
     <ToggleButtonGroup
-      value={task.priority || 'Regular'}
+      value={task.taskPriority || 'Regular'}
       exclusive
       onChange={handlePriorityChange}
       aria-label="task priority"

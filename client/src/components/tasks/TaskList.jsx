@@ -14,7 +14,7 @@ const TaskList = ({ tasks, handleToggleCompleted, onTaskClicked, onDragEnd }) =>
           overflowY: 'auto',
         }}
       >
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <TaskListItem
             key={task.id}
             task={task}

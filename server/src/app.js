@@ -4,9 +4,11 @@ import authRoute from './api/v1/routes/AuthRoute.js';
 import taskRoute from './api/v1/routes/TaskRoute.js';
 import errorHandler from './api/v1/middlewares/errorHandler.js';
 import authenticationMiddleware from './api/v1/middlewares/AuthMiddleware.js';
+import cors from 'cors';
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Connect to the database
 connectDb();

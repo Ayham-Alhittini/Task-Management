@@ -7,8 +7,8 @@ const TaskDatePicker = ({ task, handleTextChange }) => (
   <>
     <DatePicker
       label="Due Date"
-      value={task.dueDate ? dayjs(task.dueDate) : null}
-      onChange={(date) => handleTextChange('dueDate', date)}
+      value={task.taskDueDate ? dayjs(task.taskDueDate) : null}
+      onChange={(date) => handleTextChange('taskDueDate', date)}
       textField={(params) => <TextField {...params} fullWidth sx={{ mt: 2 }} />}
       fullWidth
       minDate={dayjs()}

@@ -11,11 +11,23 @@ class AuthController {
 
     async login(req, res) {
         const { email, password } = req.body;
-        const credentials = await authService.authenticateUser(email, password);
+
+        const user = await userService.findUserByEmail(email);
+        if (!user) {
+            return res.status(401).send({ message: 'Invalid credentials' });
+        }
+
+        const credentials = await authService.authenticateUser(user, password);
         if (!credentials) {
             return res.status(401).send({ message: 'Invalid credentials' });
         }
-        res.send(credentials);
+
+        res.send({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            credentials
+        });
     }
 
     async logout(req, res) {

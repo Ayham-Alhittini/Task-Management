@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 
 const taskSchema = new mongoose.Schema({
@@ -7,7 +6,7 @@ const taskSchema = new mongoose.Schema({
         required: [true, 'Task title is required'],
         trim: true,
         validate: {
-            validator: function(value) {
+            validator: function (value) {
                 return value.trim().length > 0; // Ensure the value is not just spaces
             },
             message: 'Task title cannot be empty'
@@ -39,8 +38,17 @@ const taskSchema = new mongoose.Schema({
         required: true
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+        virtuals: true,
+        transform: (doc, ret) => {
+            ret.id = ret._id;
+            delete ret._id;
+        }
+    },
+    toObject: {
+        virtuals: true
+    }
 });
 
 export default mongoose.model('Task', taskSchema);
-

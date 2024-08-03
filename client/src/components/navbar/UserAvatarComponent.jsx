@@ -16,6 +16,11 @@ const UserAvatarComponent = () => {
     setAnchorEl(null);
   };
 
+  const logout = () => {
+    localStorage.clear();
+    handleMenuClose();
+  }
+
   return (
     <>
       <Avatar onClick={handleMenuOpen}>AA</Avatar>
@@ -45,7 +50,7 @@ const UserAvatarComponent = () => {
           />
         </MenuItem>
         <Link to={'/auth/signin'} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <MenuItem onClick={handleMenuClose}>
+          <MenuItem onClick={logout}>
             Logout
           </MenuItem>
         </Link>

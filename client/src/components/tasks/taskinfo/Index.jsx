@@ -6,6 +6,8 @@ import TaskSteps from './TaskSteps';
 import TaskPriority from './TaskPriority';
 import TaskActions from './TaskActions';
 
+import taskService from '../../../services/TaskService';
+
 const TaskInfo = ({ task, setTask, deleteTask }) => {
   const theme = useTheme();
 
@@ -15,6 +17,7 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
 
   const handleTextChange = (field, value) => {
     setTask({ ...task, [field]: value });
+    taskService.updateTask(task.id, { [field]: value });
   };
 
   const handleAddStep = (step) => {
@@ -33,7 +36,8 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
 
   const handlePriorityChange = (event, newPriority) => {
     if (newPriority !== null) {
-      setTask({ ...task, priority: newPriority });
+      setTask({ ...task, taskPriority: newPriority });
+      taskService.updateTask(task.id, { taskPriority: newPriority });
     }
   };
 
@@ -48,7 +52,7 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
         bgcolor: theme.palette.background.paper
       }}
     >
-      <Typography variant="h5" gutterBottom>{task.text}</Typography>
+      <Typography variant="h5" gutterBottom>{task.taskTitle}</Typography>
       <TaskDetails task={task} handleTextChange={handleTextChange} />
       <TaskDatePicker task={task} handleTextChange={handleTextChange} />
       <TaskSteps task={task} handleAddStep={handleAddStep} handleRemoveStep={handleRemoveStep} />

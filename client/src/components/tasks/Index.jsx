@@ -8,10 +8,18 @@ import TaskInfo from './taskinfo/Index';
 import { arrayMove } from '@dnd-kit/sortable';
 import { useSidebarStatus } from '../../context/SidebarStatusContext';
 
+import taskService from '../../services/TaskService';
+
 const Tasks = () => {
   const theme = useTheme();
   const params = useParams();
   const { isLargeScreen } = useSidebarStatus();
+
+  const [loading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
+  const [taskText, setTaskText] = useState('');
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [category, setCategory] = useState(null);
 
   const categories = {
     today: 'My Day',
@@ -21,57 +29,41 @@ const Tasks = () => {
     inbox: 'Tasks'
   };
 
-  const initialTasks = [
-    {
-      id: 1,
-      text: 'Initial Task 1',
-      completed: false,
-    },
-    {
-      id: 2,
-      text: 'Initial Task 2',
-      completed: true,
-    },
-  ];
-
-  const [loading, setLoading] = useState(true);
-  const [tasks, setTasks] = useState(initialTasks);
-  const [taskText, setTaskText] = useState('');
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [category, setCategory] = useState(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
   useEffect(() => {
     if (params) {
       setCategory(params.category);
       setSelectedTask(null);
     }
+
+    taskService.getTasks().then(response => {
+      setTasks(response.data.tasks);
+      setLoading(false);
+    });
   }, [params]);
 
 
-  const handleAddTask = () => {
-    if (taskText.trim()) {
-      const newTaskObj = {
-        id: tasks.length + 1,
-        text: taskText,
-        completed: false,
-      };
-      setTasks([...tasks, newTaskObj]);
+  const handleAddTask = async () => {
+    const taskTitle = taskText.trim();
+    if (taskTitle) {
+
+      const response = await taskService.createTask({ taskTitle });
+      const newTask = response.data.task;
+
+      setTasks([newTask, ...tasks]);
       setTaskText('');
-      setSelectedTask(newTaskObj);
+      setSelectedTask(newTask);
     }
   };
 
   const handleToggleCompleted = (id) => {
+    const toggledTask = tasks.find(task => task.id === id);
+    toggledTask.isTaskCompleted = !toggledTask.isTaskCompleted;
+
     setTasks(tasks.map(task =>
-      task.id === id ? { ...task, completed: !task.completed } : task
+      task.id === id ? toggledTask : task
     ));
+
+    taskService.updateTask(id, { isTaskCompleted: toggledTask.isTaskCompleted });
   };
 
   const onDragEnd = (event) => {
@@ -89,6 +81,7 @@ const Tasks = () => {
   };
 
   const onDeleteTask = (taskId) => {
+    taskService.deleteTask(taskId);
     setTasks(tasks => tasks.filter(task => task.id !== taskId));
   }
 

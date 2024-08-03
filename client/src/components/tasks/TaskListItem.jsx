@@ -62,9 +62,9 @@ const TaskListItem = ({ task, onToggleCompleted, onClick }) => {
 
   const getTaskColor = () => {
     if (theme.palette.mode === 'dark') {
-      return task.completed ? '#121212' : '#000';
+      return task.isTaskCompleted ? '#121212' : '#000';
     }
-    return task.completed ? '#f0f0f0' : '#fff';
+    return task.isTaskCompleted ? '#f0f0f0' : '#fff';
   };
 
   return (
@@ -83,9 +83,9 @@ const TaskListItem = ({ task, onToggleCompleted, onClick }) => {
       }}
     >
       <DragHandle attributes={attributes} listeners={listeners} />
-      <TaskCheckbox completed={task.completed} onToggle={onToggleCompleted} taskId={task.id} />
-      <TaskText text={task.text} completed={task.completed} dueDate={task.dueDate} reminder={task.reminder} />
-      <TaskActions important={task.important} />
+      <TaskCheckbox completed={task.isTaskCompleted} onToggle={onToggleCompleted} taskId={task.id} />
+      <TaskText text={task.taskTitle} completed={task.isTaskCompleted} dueDate={task.taskDueDate} reminder={task.reminder} />
+      <TaskActions important={task.taskPriority} />
     </ListItem>
   );
 };
