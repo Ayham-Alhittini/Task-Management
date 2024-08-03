@@ -1,12 +1,12 @@
 import React from 'react';
-import { ListItem, IconButton, ListItemText, ListItemSecondaryAction, useTheme } from '@mui/material';
+import { ListItem, IconButton, ListItemText, ListItemSecondaryAction, useTheme, Chip } from '@mui/material';
 import { useSortable } from '@dnd-kit/sortable';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import Checkbox from '@mui/material/Checkbox';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from '@mui/icons-material/Star';
 import { CSS } from '@dnd-kit/utilities';
-import Typography from '@mui/material/Typography';
+import EventIcon from '@mui/icons-material/Event';
+import { ProioirtyColor } from '../../utils/constants';
+import dayjs from 'dayjs';
 
 const DragHandle = ({ attributes, listeners }) => (
   <IconButton {...attributes} {...listeners}>
@@ -27,32 +27,29 @@ const TaskCheckbox = ({ completed, onToggle, taskId }) => (
   />
 );
 
-const TaskText = ({ text, completed, dueDate, reminder }) => (
+const TaskText = ({ text, completed, dueDate }) => (
   <ListItemText
     primary={text}
     secondary={
       <>
-        {dueDate && (
-          <Typography component="span" variant="body2" color="textPrimary">
-            Due: {dueDate.toLocaleString()}
-          </Typography>
-        )}
-        {reminder && (
-          <Typography component="span" variant="body2" color="textPrimary">
-            Reminder: {reminder.toLocaleString()}
-          </Typography>
-        )}
+        {
+          dueDate &&
+          <Chip
+            icon={<EventIcon />}
+            label={dayjs(dueDate).format('MMMM D, YYYY')}
+            component="span"
+          />
+        }
       </>
     }
     style={{ textDecoration: completed ? 'line-through' : 'none' }}
   />
 );
 
-const TaskActions = ({ important }) => (
+const TaskPriority = ({ priority }) => (
   <ListItemSecondaryAction>
-    <IconButton edge="end">
-      {important ? <StarIcon color="primary" /> : <StarBorderIcon />}
-    </IconButton>
+    <div style={{ width: '15px', height: '15px', backgroundColor: ProioirtyColor[priority], borderRadius: '50%' }}>
+    </div>
   </ListItemSecondaryAction>
 );
 
@@ -77,15 +74,16 @@ const TaskListItem = ({ task, onToggleCompleted, onClick }) => {
         border: '1px solid #ccc',
         borderRadius: '8px',
         margin: '8px 0',
-        padding: '16px',
+        padding: '5px',
         backgroundColor: getTaskColor(),
         cursor: 'pointer',
+        height: '70px'
       }}
     >
       <DragHandle attributes={attributes} listeners={listeners} />
       <TaskCheckbox completed={task.isTaskCompleted} onToggle={onToggleCompleted} taskId={task.id} />
       <TaskText text={task.taskTitle} completed={task.isTaskCompleted} dueDate={task.taskDueDate} reminder={task.reminder} />
-      <TaskActions important={task.taskPriority} />
+      <TaskPriority priority={task.taskPriority} />
     </ListItem>
   );
 };

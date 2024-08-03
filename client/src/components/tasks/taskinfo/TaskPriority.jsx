@@ -1,6 +1,8 @@
 import React from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 
+import { ProioirtyColor } from '../../../utils/constants';
+
 const TaskPriority = ({ task, handlePriorityChange }) => (
   <>
     <ToggleButtonGroup
@@ -14,7 +16,7 @@ const TaskPriority = ({ task, handlePriorityChange }) => (
         value="Regular"
         aria-label="Regular"
         sx={{
-          '&.Mui-selected': { bgcolor: '#d3d3d3' }
+          '&.Mui-selected': { bgcolor: ProioirtyColor['Regular'] }
         }}
       >
         Regular
@@ -23,7 +25,7 @@ const TaskPriority = ({ task, handlePriorityChange }) => (
         value="Moderate"
         aria-label="Moderate"
         sx={{
-          '&.Mui-selected': { bgcolor: '#ffb74d' }
+          '&.Mui-selected': { bgcolor: ProioirtyColor['Moderate'] }
         }}
       >
         Moderate
@@ -32,7 +34,7 @@ const TaskPriority = ({ task, handlePriorityChange }) => (
         value="High"
         aria-label="High"
         sx={{
-          '&.Mui-selected': { bgcolor: '#f44336' }
+          '&.Mui-selected': { bgcolor: ProioirtyColor['High'] }
         }}
       >
         High
