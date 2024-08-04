@@ -1,5 +1,6 @@
 import { Search as SearchIcon } from "@mui/icons-material";
 import { alpha, InputBase, styled } from "@mui/material";
+import { useSearch } from "../../context/SearchContext";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -43,16 +44,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchComponent = () => (
-  <Search>
-    <SearchIconWrapper>
-      <SearchIcon />
-    </SearchIconWrapper>
-    <StyledInputBase
-      placeholder="Search…"
-      inputProps={{ 'aria-label': 'search' }}
-    />
-  </Search>
-);
+function SearchComponent() {
+
+  const { handleSearchChange } = useSearch();
+
+  return (
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
+        placeholder="Search…"
+        inputProps={{ 'aria-label': 'search' }}
+        onChange={handleSearchChange}
+      />
+    </Search>
+  );
+};
 
 export default SearchComponent;

@@ -11,32 +11,50 @@ import { SelectedTaskContext } from '../../context/SelectedTaskContext';
 import { CATEGORIES } from '../../utils/constants';
 
 import taskService from '../../services/TaskService';
+import { useSearch } from '../../context/SearchContext';
 
 const Tasks = () => {
   const theme = useTheme();
   const params = useParams();
   const { isLargeScreen } = useSidebarStatus();
+  const { searchQuery } = useSearch();
 
-  const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedTask, setSelectedTask] = useState(null);
   const [category, setCategory] = useState(null);
 
-  useEffect(() => {
+
+  const loadTasks = () => {
+    taskService.getTasks().then(response => {
+      const tasks = response.data.tasks;
+      setTasks(tasks);
+      setFilteredTasks(tasks);
+      setLoading(false);
+    });
+  }
+  const onTasksSearch = () => {
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      setFilteredTasks(tasks.filter(task => task.taskTitle.toLowerCase().includes(query)));
+    } else {
+      setFilteredTasks(tasks);
+    }
+  }
+  const loadTasksCategoriy = () => {
     if (params) {
       setCategory(params.category);
       setSelectedTask(null);
     }
+  }
 
-    taskService.getTasks().then(response => {
-      setTasks(response.data.tasks);
-      setLoading(false);
-    });
-  }, [params]);
-
+  useEffect(loadTasks, [])
+  useEffect(onTasksSearch, [searchQuery, tasks]);
+  useEffect(loadTasksCategoriy, [params]);
 
   return (
-    <TasksContext.Provider value={{ tasks, setTasks }}>
+    <TasksContext.Provider value={{ tasks: filteredTasks, setTasks }}>
       <SelectedTaskContext.Provider value={{ selectedTask, setSelectedTask }}>
         <Stack direction={'row'} flex={6}>
           {
