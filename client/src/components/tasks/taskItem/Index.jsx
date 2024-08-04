@@ -12,7 +12,7 @@ function TaskListItem({ task }) {
 
   const theme = useTheme();
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.id });
-  const { setSelectedTask } = useSelectedTask();
+  const { selectedTask, setSelectedTask } = useSelectedTask();
 
   const getTaskColor = () => {
     if (theme.palette.mode === 'dark') {
@@ -28,7 +28,7 @@ function TaskListItem({ task }) {
       style={{
         transition,
         transform: CSS.Transform.toString(transform),
-        border: '1px solid #ccc',
+        border: `${task.id === selectedTask?.id ? '2px solid #1976d2' : '1px solid #ccc'}`,
         borderRadius: '8px',
         margin: '8px 0',
         padding: '5px',
