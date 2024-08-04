@@ -12,6 +12,7 @@ import { CATEGORIES } from '../../utils/constants';
 
 import taskService from '../../services/TaskService';
 import { useSearch } from '../../context/SearchContext';
+import SortMenu from './TasksSortMenu';
 
 const Tasks = () => {
   const theme = useTheme();
@@ -69,7 +70,10 @@ const Tasks = () => {
                 <TaskLoader />
               ) : (
                 <Box>
-                  <Typography variant="h5" gutterBottom>{CATEGORIES[category]}</Typography>
+                  <Box display="flex" justifyContent="space-between" mb={2}>
+                    <Typography variant="h5" gutterBottom>{CATEGORIES[category]}</Typography>
+                    <SortMenu />
+                  </Box>
                   <TaskInput />
                   <TaskList />
                 </Box>
