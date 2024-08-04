@@ -85,6 +85,13 @@ const Tasks = () => {
     setTasks(tasks => tasks.filter(task => task.id !== taskId));
   }
 
+  const onTaskUpdate = (updatedTask) => {
+    setSelectedTask(updatedTask);
+    if (updatedTask) {
+      setTasks(tasks.map(task => task.id === selectedTask.id ? updatedTask : task));
+    }
+  }
+
   return (
     <Stack direction={'row'} flex={6}>
       <Box
@@ -112,7 +119,7 @@ const Tasks = () => {
           </Box>
         )}
       </Box>
-      <TaskInfo task={selectedTask} setTask={setSelectedTask} deleteTask={onDeleteTask} />
+      <TaskInfo task={selectedTask} setTask={onTaskUpdate} deleteTask={onDeleteTask} />
     </Stack>
   );
 };
