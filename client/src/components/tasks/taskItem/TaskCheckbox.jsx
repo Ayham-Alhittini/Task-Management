@@ -1,10 +1,19 @@
 import Checkbox from '@mui/material/Checkbox';
 import { useTasks } from '../../../context/TasksContext';
 import taskService from '../../../services/TaskService';
+import taskCompletedSound from '../../../assets/task-completed-effect.wav';
 
 function TaskCheckbox({ taskId, isTaskCompleted }) {
 
   const { setTasks } = useTasks();
+
+  const playSuccessSoundIfCompleted = (toggledCheckStatus) => {
+    if (toggledCheckStatus) {
+      const audio = new Audio(taskCompletedSound);
+      audio.play();
+    }
+  }
+
 
   const handleToggleCompleted = (id) => {
     const toggledCheckStatus = !isTaskCompleted;
@@ -12,7 +21,9 @@ function TaskCheckbox({ taskId, isTaskCompleted }) {
       task.id === id ? { ...task, isTaskCompleted: toggledCheckStatus } : task
     ));
     taskService.updateTask(id, { isTaskCompleted: toggledCheckStatus });
+    playSuccessSoundIfCompleted(toggledCheckStatus);
   };
+
 
   return (
     <Checkbox
