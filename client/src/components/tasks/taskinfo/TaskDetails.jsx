@@ -1,11 +1,11 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
-const TaskDetails = ({ task, handleTextChange }) => (
+const TaskDetails = ({ selectedTask, handleTextChange }) => (
   <>
     <TextField
       label="Task Name"
-      value={task.taskTitle}
+      value={selectedTask.taskTitle}
       onChange={(e) => handleTextChange('taskTitle', e.target.value)}
       fullWidth
       variant="outlined"
@@ -13,7 +13,7 @@ const TaskDetails = ({ task, handleTextChange }) => (
     />
     <TextField
       label="Task Description"
-      value={task.taskDescription || ''}
+      value={selectedTask.taskDescription || ''}
       onChange={(e) => handleTextChange('taskDescription', e.target.value)}
       fullWidth
       variant="outlined"

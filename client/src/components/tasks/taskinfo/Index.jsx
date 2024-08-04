@@ -2,42 +2,37 @@ import React from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import TaskDetails from './TaskDetails';
 import TaskDatePicker from './TaskDatePicker';
-import TaskSteps from './TaskSteps';
 import TaskPriority from './TaskPriority';
 import TaskActions from './TaskActions';
 
 import taskService from '../../../services/TaskService';
+import { useTasks } from '../../../context/TasksContext';
+import { useSelectedTask } from '../../../context/SelectedTaskContext';
 
-const TaskInfo = ({ task, setTask, deleteTask }) => {
+const TaskInfo = () => {
   const theme = useTheme();
+  const { tasks, setTasks } = useTasks();
+  const { selectedTask, setSelectedTask } = useSelectedTask();
 
-  if (!task) {
+  if (!selectedTask) {
     return null;
   }
 
-  const handleTextChange = (field, value) => {
-    setTask({ ...task, [field]: value });
-    taskService.updateTask(task.id, { [field]: value });
+  const handleUpdate = (field, value) => {
+    const updatedTask = { ...selectedTask, [field]: value };
+    setSelectedTask(updatedTask);
+    taskService.updateTask(selectedTask.id, { [field]: value });
+    notifyTasksComponent(updatedTask);
   };
 
-  const handleAddStep = (step) => {
-    setTask({ ...task, steps: [...task.steps, step] });
-  };
 
-  const handleRemoveStep = (index) => {
-    const newSteps = task.steps.filter((_, i) => i !== index);
-    setTask({ ...task, steps: newSteps });
-  };
-
-  const handleDeleteTask = () => {
-    deleteTask(task.id);
-    setTask(null);
-  };
+  const notifyTasksComponent = (updatedTask) => {
+    setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+  }
 
   const handlePriorityChange = (event, newPriority) => {
     if (newPriority !== null) {
-      setTask({ ...task, taskPriority: newPriority });
-      taskService.updateTask(task.id, { taskPriority: newPriority });
+      handleUpdate('taskPriority', newPriority);
     }
   };
 
@@ -52,12 +47,11 @@ const TaskInfo = ({ task, setTask, deleteTask }) => {
         bgcolor: theme.palette.background.paper
       }}
     >
-      <Typography variant="h5" gutterBottom>{task.taskTitle}</Typography>
-      <TaskDetails task={task} handleTextChange={handleTextChange} />
-      <TaskDatePicker task={task} handleTextChange={handleTextChange} />
-      <TaskSteps task={task} handleAddStep={handleAddStep} handleRemoveStep={handleRemoveStep} />
-      <TaskPriority task={task} handlePriorityChange={handlePriorityChange} />
-      <TaskActions setTask={setTask} handleDeleteTask={handleDeleteTask} />
+      <Typography variant="h5" gutterBottom>{selectedTask.taskTitle}</Typography>
+      <TaskDetails selectedTask={selectedTask} handleTextChange={handleUpdate} />
+      <TaskDatePicker selectedTask={selectedTask} handleTextChange={handleUpdate} />
+      <TaskPriority selectedTask={selectedTask} handlePriorityChange={handlePriorityChange} />
+      <TaskActions selectedTask={selectedTask} setSelectedTask={setSelectedTask} setTasks={setTasks} />
     </Box>
   );
 };

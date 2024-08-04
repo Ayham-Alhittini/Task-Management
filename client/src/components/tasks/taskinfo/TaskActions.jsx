@@ -2,8 +2,23 @@ import React from 'react';
 import { IconButton, Stack, useTheme } from '@mui/material';
 import { ExitToAppOutlined as ExitToAppIcon, Delete } from '@mui/icons-material';
 
-const TaskActions = ({ setTask, handleDeleteTask }) => {
+import taskService from '../../../services/TaskService';
+
+const TaskActions = ({ selectedTask, setSelectedTask, setTasks }) => {
   const theme = useTheme();
+
+  const closeTaskInfo = () => {
+    setSelectedTask(null);
+  }
+
+  const onDeleteTask = () => {
+    const taskId = selectedTask.id;
+
+    setTasks(tasks => tasks.filter(task => task.id !== taskId));
+    closeTaskInfo();
+    taskService.deleteTask(taskId);
+  }
+
   return (
     <Stack
       direction={'row'}
@@ -16,10 +31,10 @@ const TaskActions = ({ setTask, handleDeleteTask }) => {
       justifyContent={'space-between'}
       sx={{ borderTop: `1px solid ${theme.palette.divider}`, pt: 2 }}
     >
-      <IconButton color="primary" onClick={() => setTask(null)} aria-label="exit">
+      <IconButton color="primary" onClick={closeTaskInfo} aria-label="exit">
         <ExitToAppIcon />
       </IconButton>
-      <IconButton color="error" onClick={handleDeleteTask} aria-label="delete task">
+      <IconButton color="error" onClick={onDeleteTask} aria-label="delete task">
         <Delete />
       </IconButton>
     </Stack>
