@@ -1,6 +1,5 @@
-import { List, Divider } from "@mui/material";
+import { List } from "@mui/material";
 import SidebarItem from "./SidebarItem";
-
 const SidebarList = ({ items }) => (
   <>
     <List sx={{ padding: 0 }}>
@@ -8,7 +7,6 @@ const SidebarList = ({ items }) => (
         <SidebarItem key={index} item={item} />
       ))}
     </List>
-    <Divider sx={{ my: 1 }} />
   </>
 );
 

@@ -39,7 +39,7 @@ class AuthService {
     }
 
     generateAccessToken(userId) {
-        return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+        return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1H' });
     }
 
     generateRefreshToken(userId) {

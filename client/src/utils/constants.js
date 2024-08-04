@@ -8,7 +8,7 @@ export const PRIORITY_COLOR = {
 export const CATEGORIES = {
   today: 'My Day',
   important: 'Important',
-  planned: 'Planned',
+  upcoming: 'Upcoming',
   assigned_to_me: 'Assigned to me',
   inbox: 'Tasks'
 }
