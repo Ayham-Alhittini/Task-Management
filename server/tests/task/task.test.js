@@ -30,7 +30,7 @@ describe('Task Requests', () => {
                 email: user.email,
                 password: user.password
             });
-        accessToken = loginResponse.body.accessToken;
+        accessToken = loginResponse.body.credentials.accessToken;
     });
 
     it('should create a new task', async() => {
@@ -43,7 +43,7 @@ describe('Task Requests', () => {
             });
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty('task');
-        taskId = response.body.task._id;
+        taskId = response.body.task.id;
     });
 
     it('should get tasks with specified priority', async() => {
@@ -60,7 +60,7 @@ describe('Task Requests', () => {
             .set('Authorization', `Bearer ${accessToken}`)
             .send({
                 isTaskCompleted: true,
-                taskDueDate: '2024-07-23',
+                taskDueDate: '2024-09-23',
                 taskPriority: 'High'
             });
         expect(response.statusCode).toBe(200);

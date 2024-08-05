@@ -34,10 +34,10 @@ describe('Auth Requests', () => {
                 password: user.password
             });
         expect(response.statusCode).toBe(200);
-        expect(response.body).toHaveProperty('accessToken');
-        expect(response.body).toHaveProperty('refreshToken');
-        accessToken = response.body.accessToken;
-        refreshToken = response.body.refreshToken;
+        expect(response.body).toHaveProperty('credentials.accessToken');
+        expect(response.body).toHaveProperty('credentials.refreshToken');
+        accessToken = response.body.credentials.accessToken;
+        refreshToken = response.body.credentials.refreshToken;
     });
 
     it('should generate a new access token', async() => {
