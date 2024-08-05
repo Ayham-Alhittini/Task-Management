@@ -18,7 +18,7 @@ For detailed usage documentation, please refer to the [user guide](https://scrib
 ## Setup
 
 ### Prerequisites
-- Ensure you have [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) installed on your machine.
+- Ensure you have [Node.js](https://nodejs.org/) installed on your machine, and for mongo we use mongodb atlas so don't worry about it
 
 ### Installation
 1. Clone the repository:
