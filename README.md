@@ -25,11 +25,13 @@ For detailed usage documentation, please refer to the [user guide](https://scrib
    ```bash
    git clone https://github.com/Ayham-Alhittini/Task-Management.git
    cd Task-Management
+
 2. Install dependencies and start the server:
    ```bash
    cd server
    npm install
    npm start
+
 3. Install dependencies and start the client:
    ```bash
    cd client
@@ -42,14 +44,15 @@ For detailed usage documentation, please refer to the [user guide](https://scrib
 1. To run all server tests:
    ```bash
       npm test
+
 2. To run authentication tests:
    ```bash
-   npm run test:auth
+      npm run test:auth
+
 3. To run task management tests:
    ```bash
-   npm run test:task
+      npm run test:task
 
-   
 ### Technologies Used
 * Frontend
 React,
