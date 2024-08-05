@@ -3,7 +3,7 @@ import { useTasks } from '../../../context/TasksContext';
 import taskService from '../../../services/TaskService';
 import taskCompletedSound from '../../../assets/task-completed-effect.wav';
 
-function TaskCheckbox({ taskId, isTaskCompleted }) {
+function TaskCheckbox({ taskId, isTaskCompleted, initialMargin }) {
 
   const { setTasks } = useTasks();
 
@@ -31,6 +31,7 @@ function TaskCheckbox({ taskId, isTaskCompleted }) {
       checked={isTaskCompleted}
       tabIndex={-1}
       disableRipple
+      sx={{ ml: initialMargin ? 2 : null }}
       onClick={(event) => {
         event.stopPropagation();
         handleToggleCompleted(taskId);

@@ -1,6 +1,7 @@
 import { Search as SearchIcon } from "@mui/icons-material";
 import { alpha, InputBase, styled } from "@mui/material";
 import { useSearch } from "../../context/SearchContext";
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -46,7 +47,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function SearchComponent() {
 
+  const navigate = useNavigate();
+
   const { handleSearchChange } = useSearch();
+
+  const onSearchChange = (event) => {
+    handleSearchChange(event);
+    navigate('/tasks/inbox');
+  }
 
   return (
     <Search>
@@ -56,7 +64,7 @@ function SearchComponent() {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
-        onChange={handleSearchChange}
+        onChange={onSearchChange}
       />
     </Search>
   );

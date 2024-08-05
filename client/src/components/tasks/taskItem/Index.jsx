@@ -8,7 +8,7 @@ import TaskCheckbox from './TaskCheckbox';
 import DragHandle from './DragHandle';
 import TaskPriority from './TaskPriority';
 
-function TaskListItem({ task }) {
+function TaskListItem({ task, draggable }) {
 
   const theme = useTheme();
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.id });
@@ -37,8 +37,8 @@ function TaskListItem({ task }) {
         height: '70px'
       }}
     >
-      <DragHandle attributes={attributes} listeners={listeners} />
-      <TaskCheckbox taskId={task.id} isTaskCompleted={task.isTaskCompleted} />
+      {draggable && <DragHandle attributes={attributes} listeners={listeners} />}
+      <TaskCheckbox taskId={task.id} isTaskCompleted={task.isTaskCompleted} initialMargin={!draggable} />
       <TaskText text={task.taskTitle} isTaskCompleted={task.isTaskCompleted} dueDate={task.taskDueDate} />
       <TaskPriority priority={task.taskPriority} />
     </ListItem>

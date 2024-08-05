@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import TaskInput from './TaskInput';
-import TaskList from './TaskList';
 import TaskLoader from './TaskLoader';
 import TaskInfo from './taskinfo/Index';
 import { useSidebarStatus } from '../../context/SidebarStatusContext';
@@ -16,7 +15,6 @@ import SortMenu from './TasksSortMenu';
 
 const Tasks = () => {
   const theme = useTheme();
-  const params = useParams();
   const { isLargeScreen } = useSidebarStatus();
   const { searchQuery } = useSearch();
 
@@ -24,8 +22,9 @@ const Tasks = () => {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTask, setSelectedTask] = useState(null);
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState();
 
+  const location = useLocation();
 
   const loadTasks = () => {
     taskService.getTasks().then(response => {
@@ -33,6 +32,7 @@ const Tasks = () => {
       setTasks(tasks);
       setFilteredTasks(tasks);
       setLoading(false);
+      console.log('fetched');
     });
   }
   const onTasksSearch = () => {
@@ -43,16 +43,15 @@ const Tasks = () => {
       setFilteredTasks(tasks);
     }
   }
-  const loadTasksCategoriy = () => {
-    if (params) {
-      setCategory(params.category);
-      setSelectedTask(null);
-    }
+  const loadCategory = () => {
+    const category = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+    setCategory(category);
+    setSelectedTask(null);
   }
 
   useEffect(loadTasks, [])
   useEffect(onTasksSearch, [searchQuery, tasks]);
-  useEffect(loadTasksCategoriy, [params]);
+  useEffect(loadCategory, [location]);
 
   return (
     <TasksContext.Provider value={{ tasks: filteredTasks, setTasks }}>
@@ -75,7 +74,7 @@ const Tasks = () => {
                     <SortMenu />
                   </Box>
                   <TaskInput />
-                  <TaskList />
+                  <Outlet />
                 </Box>
               )}
             </Box>

@@ -8,6 +8,7 @@ import TaskActions from './TaskActions';
 import taskService from '../../../services/TaskService';
 import { useTasks } from '../../../context/TasksContext';
 import { useSelectedTask } from '../../../context/SelectedTaskContext';
+import TaskDayAction from './TaskDayAction';
 
 const TaskInfo = () => {
   const theme = useTheme();
@@ -48,6 +49,7 @@ const TaskInfo = () => {
       }}
     >
       <Typography variant="h5" gutterBottom>{selectedTask.taskTitle}</Typography>
+      <TaskDayAction selectedTask={selectedTask} handleTextChange={handleUpdate} />
       <TaskDetails selectedTask={selectedTask} handleTextChange={handleUpdate} />
       <TaskDatePicker selectedTask={selectedTask} handleTextChange={handleUpdate} />
       <TaskPriority selectedTask={selectedTask} handlePriorityChange={handlePriorityChange} />
