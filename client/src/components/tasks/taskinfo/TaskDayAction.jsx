@@ -5,8 +5,10 @@ function TaskDayAction({ selectedTask, handleTextChange }) {
 
   const theme = useTheme();
 
+  const isSelectedTaskOnTodayTasks = isToday(new Date(selectedTask.taskDay));
+
   const handleButtonClick = () => {
-    if (isToday(new Date(selectedTask.taskDay))) {
+    if (isSelectedTaskOnTodayTasks) {
       handleTextChange('taskDay', null);
     } else {
       handleTextChange('taskDay', new Date());
@@ -19,14 +21,14 @@ function TaskDayAction({ selectedTask, handleTextChange }) {
       sx={{
         display: 'block',
         margin: '20px auto',
-        backgroundColor: selectedTask.taskDay ? theme.palette.error.main : theme.palette.primary.main,
+        backgroundColor: isSelectedTaskOnTodayTasks ? theme.palette.error.main : theme.palette.primary.main,
         color: theme.palette.common.white,
         '&:hover': {
-          backgroundColor: selectedTask.taskDay ? theme.palette.error.dark : theme.palette.primary.dark,
+          backgroundColor: isSelectedTaskOnTodayTasks ? theme.palette.error.dark : theme.palette.primary.dark,
         },
       }}
     >
-      {selectedTask.taskDay ? 'Remove from my day' : 'Add to my day'}
+      {isSelectedTaskOnTodayTasks ? 'Remove from my day' : 'Add to my day'}
     </Button>
   );
 }

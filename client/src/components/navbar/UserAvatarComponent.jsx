@@ -8,6 +8,8 @@ const UserAvatarComponent = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { mode, setMode } = useMode();
 
+  const user = JSON.parse(localStorage.getItem('user'));
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -23,7 +25,7 @@ const UserAvatarComponent = () => {
 
   return (
     <>
-      <Avatar onClick={handleMenuOpen}>AA</Avatar>
+      <Avatar onClick={handleMenuOpen}>{user.firstName[0] + '' + user.lastName[0]}</Avatar>
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}
@@ -39,7 +41,7 @@ const UserAvatarComponent = () => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose} sx={{ cursor: 'default' }}>Ayham Alhettini</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ cursor: 'default' }}>{user.firstName + ' ' + user.lastName}</MenuItem>
         <MenuItem>
           <ModeNight sx={{ mr: 2 }} />
           Dark Mode

@@ -15,7 +15,7 @@ import SortMenu from './TasksSortMenu';
 
 const Tasks = () => {
   const theme = useTheme();
-  const { isLargeScreen } = useSidebarStatus();
+  const { isLargeScreen, setOpen } = useSidebarStatus();
   const { searchQuery } = useSearch();
 
   const [tasks, setTasks] = useState([]);
@@ -47,6 +47,7 @@ const Tasks = () => {
     const category = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
     setCategory(category);
     setSelectedTask(null);
+    setOpen(false);
   }
 
   useEffect(loadTasks, [])

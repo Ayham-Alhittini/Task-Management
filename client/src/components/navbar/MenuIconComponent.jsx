@@ -18,6 +18,7 @@ const MenuIconComponent = () => {
       aria-label="open drawer"
       sx={{ mr: 2 }}
       onClick={toggleSidebar}
+      id="menu-icon"
     >
       <MenuIcon />
     </IconButton>
