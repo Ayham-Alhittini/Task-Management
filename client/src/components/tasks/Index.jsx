@@ -47,7 +47,7 @@ const Tasks = () => {
     const category = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
     setCategory(category);
     setSelectedTask(null);
-    setOpen(false);
+    if (!isLargeScreen) setOpen(false);
   }
 
   useEffect(loadTasks, [])
